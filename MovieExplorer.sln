@@ -3,7 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieExplorer.Portable", "MovieExplorer.Portable\MovieExplorer.Portable.csproj", "{244F43B7-8DE8-4F3F-8ECA-AA197432C981}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieExplorer.Droid", "MovieExplorer.Droid\MovieExplorer.Droid.csproj", "{E9B529C4-6414-413B-8186-21AF94E1E8EF}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{244F43B7-8DE8-4F3F-8ECA-AA197432C981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{244F43B7-8DE8-4F3F-8ECA-AA197432C981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{244F43B7-8DE8-4F3F-8ECA-AA197432C981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{244F43B7-8DE8-4F3F-8ECA-AA197432C981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9B529C4-6414-413B-8186-21AF94E1E8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9B529C4-6414-413B-8186-21AF94E1E8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9B529C4-6414-413B-8186-21AF94E1E8EF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E9B529C4-6414-413B-8186-21AF94E1E8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9B529C4-6414-413B-8186-21AF94E1E8EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9B529C4-6414-413B-8186-21AF94E1E8EF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
