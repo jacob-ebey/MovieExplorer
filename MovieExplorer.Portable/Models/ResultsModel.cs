@@ -17,10 +17,5 @@ namespace MovieExplorer.Models
 
         [JsonProperty("results")]
         public IEnumerable<T> Results { get; set; }
-
-        internal bool Any()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

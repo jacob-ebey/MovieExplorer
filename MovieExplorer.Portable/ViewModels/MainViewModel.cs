@@ -3,6 +3,8 @@ using MovieExplorer.Models;
 using MovieExplorer.Services;
 using MvvmCross.Core.ViewModels;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -16,12 +18,21 @@ namespace MovieExplorer.ViewModels
         private bool _isLoading = false;
 
         // Backing fields
-        private IEnumerable<MovieListResult> _topRated, _popular, _nowPlaying;
+        private ObservableCollection<MovieListResult> _topRated, _popular, _nowPlaying;
         private string _topRatedErrorMessage, _popularErrorMessage, _nowPlayingErrorMessage;
 
         public MainViewModel(IMovieService movieService)
         {
             _movieService = movieService;
+
+            _topRated = new ObservableCollection<MovieListResult>();
+            _popular = new ObservableCollection<MovieListResult>();
+            _nowPlaying = new ObservableCollection<MovieListResult>();
+
+            ReloadCommand = new MvxAsyncCommand(async () =>
+            {
+                await LoadAllCategoriesAsync();
+            });
 
             MovieSelectedCommand = new MvxCommand<MovieListResult>(r =>
             {
@@ -45,7 +56,7 @@ namespace MovieExplorer.ViewModels
         /// <summary>
         /// The top rated movies.
         /// </summary>
-        public IEnumerable<MovieListResult> TopRated
+        public ObservableCollection<MovieListResult> TopRated
         {
             get { return _topRated; }
             set { SetProperty(ref _topRated, value); }
@@ -63,7 +74,7 @@ namespace MovieExplorer.ViewModels
         /// <summary>
         /// The popular movies.
         /// </summary>
-        public IEnumerable<MovieListResult> Popular
+        public ObservableCollection<MovieListResult> Popular
         {
             get { return _popular; }
             set { SetProperty(ref _popular, value); }
@@ -81,7 +92,7 @@ namespace MovieExplorer.ViewModels
         /// <summary>
         /// Movies that are now playing in theaters.
         /// </summary>
-        public IEnumerable<MovieListResult> NowPlaying
+        public ObservableCollection<MovieListResult> NowPlaying
         {
             get { return _nowPlaying; }
             set { SetProperty(ref _nowPlaying, value); }
@@ -110,49 +121,80 @@ namespace MovieExplorer.ViewModels
             // Return if we are already loading
             if (_isLoading) return Task.FromResult(false);
             _isLoading = true;
-
-            // Clear messages
-            ErrorMessage = null;
-            TopRatedErrorMessage = null;
-            PopularErrorMessage = null;
-            NowPlayingErrorMessage = null;
-            
-            return ShowLoaderAsync(async () =>
+            try
             {
-                // Kick off all tasks async
-                var topRatedTask = _movieService.GetTopRatedAsync();
-                var popularTask = _movieService.GetPopularAsync();
-                var nowPlayingTask = _movieService.GetNowPlayingAsync();
+                // Clear messages
+                ErrorMessage = null;
+                TopRatedErrorMessage = null;
+                PopularErrorMessage = null;
+                NowPlayingErrorMessage = null;
 
-                // Await for all results
-                var topRatedResult = await topRatedTask;
-                var popularResult = await popularTask;
-                var nowPlayingResult = await nowPlayingTask;
+                TopRated.Clear();
+                Popular.Clear();
+                NowPlaying.Clear();
 
-                // Check top rated for data
-                if (topRatedResult.Succeeded && (topRatedResult.Data?.Any() ?? false))
-                    TopRated = topRatedResult.Data.Results;
-                else
-                    TopRatedErrorMessage = string.Format(_errorMessageTemplate, "top rated");
-
-                // Check popular for data
-                if (popularResult.Succeeded && (popularResult.Data?.Any() ?? false))
-                    Popular = popularResult.Data.Results;
-                else
-                    PopularErrorMessage = string.Format(_errorMessageTemplate, "popular");
-                
-                // Check now playing for data
-                if (nowPlayingResult.Succeeded && (nowPlayingResult.Data?.Any() ?? false))
-                    NowPlaying = nowPlayingResult.Data.Results;
-                else
-                    NowPlayingErrorMessage = string.Format(_errorMessageTemplate, "now playing");
-
-                // If there was no data for any category show a generic error message because something went seriouslly wrong...
-                if (TopRatedErrorMessage != null && PopularErrorMessage != null && NowPlayingErrorMessage != null)
+                return ShowLoaderAsync(async () =>
                 {
-                    throw new MessageException();
-                }
-            });
+                    // Kick off all tasks async
+                    var topRatedTask = _movieService.GetTopRatedAsync();
+                    var popularTask = _movieService.GetPopularAsync();
+                    var nowPlayingTask = _movieService.GetNowPlayingAsync();
+
+                    // Await for all results
+                    var topRatedResult = await topRatedTask;
+                    var popularResult = await popularTask;
+                    var nowPlayingResult = await nowPlayingTask;
+
+                    // Check top rated for data
+                    if (topRatedResult.Succeeded && (topRatedResult.Data?.Results?.Any() ?? false))
+                    {
+                        foreach (var item in topRatedResult.Data.Results)
+                        {
+                            TopRated.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        TopRatedErrorMessage = string.Format(_errorMessageTemplate, "top rated");
+                    }
+
+                    // Check popular for data
+                    if (popularResult.Succeeded && (popularResult.Data?.Results?.Any() ?? false))
+                    {
+                        foreach (var item in popularResult.Data.Results)
+                        {
+                            Popular.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        PopularErrorMessage = string.Format(_errorMessageTemplate, "popular");
+                    }
+
+                    // Check now playing for data
+                    if (nowPlayingResult.Succeeded && (nowPlayingResult.Data?.Results?.Any() ?? false))
+                    {
+                        foreach (var item in nowPlayingResult.Data.Results)
+                        {
+                            NowPlaying.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        NowPlayingErrorMessage = string.Format(_errorMessageTemplate, "now playing");
+                    }
+
+                    // If there was no data for any category show a generic error message because something went seriouslly wrong...
+                    if (TopRatedErrorMessage != null && PopularErrorMessage != null && NowPlayingErrorMessage != null)
+                    {
+                        throw new MessageException();
+                    }
+                });
+            }
+            finally
+            {
+                _isLoading = false;
+            }
         }
     }
 }
