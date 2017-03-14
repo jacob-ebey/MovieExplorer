@@ -50,6 +50,22 @@ namespace MovieExplorer.Droid
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxItemTemplate = global::MovieExplorer.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
 		}
 		
+		public partial class Animation
+		{
+			
+			// aapt resource value: 0x7f040000
+			public const int PosterClick = 2130968576;
+			
+			static Animation()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Animation()
+			{
+			}
+		}
+		
 		public partial class Attribute
 		{
 			
@@ -84,11 +100,39 @@ namespace MovieExplorer.Droid
 			}
 		}
 		
+		public partial class Color
+		{
+			
+			// aapt resource value: 0x7f070003
+			public const int background_color = 2131165187;
+			
+			// aapt resource value: 0x7f070002
+			public const int section_label_color = 2131165186;
+			
+			// aapt resource value: 0x7f070000
+			public const int toolbar_color = 2131165184;
+			
+			// aapt resource value: 0x7f070001
+			public const int toolbar_font_color = 2131165185;
+			
+			static Color()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Color()
+			{
+			}
+		}
+		
 		public partial class Drawable
 		{
 			
 			// aapt resource value: 0x7f020000
 			public const int Icon = 2130837504;
+			
+			// aapt resource value: 0x7f020001
+			public const int window_close = 2130837505;
 			
 			static Drawable()
 			{
@@ -103,20 +147,38 @@ namespace MovieExplorer.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f040000
-			public const int MvvmCrossTagId = 2130968576;
+			// aapt resource value: 0x7f050000
+			public const int MvvmCrossTagId = 2131034112;
 			
-			// aapt resource value: 0x7f040001
-			public const int MvxBindingTagUnique = 2130968577;
+			// aapt resource value: 0x7f050001
+			public const int MvxBindingTagUnique = 2131034113;
 			
-			// aapt resource value: 0x7f040003
-			public const int MyButton = 2130968579;
+			// aapt resource value: 0x7f050006
+			public const int MyButton = 2131034118;
 			
-			// aapt resource value: 0x7f040004
-			public const int image1 = 2130968580;
+			// aapt resource value: 0x7f05000a
+			public const int action_back = 2131034122;
 			
-			// aapt resource value: 0x7f040002
-			public const int top_rated_list = 2130968578;
+			// aapt resource value: 0x7f050009
+			public const int close_image = 2131034121;
+			
+			// aapt resource value: 0x7f050005
+			public const int now_playing_list = 2131034117;
+			
+			// aapt resource value: 0x7f050004
+			public const int popular_list = 2131034116;
+			
+			// aapt resource value: 0x7f050007
+			public const int poster_image = 2131034119;
+			
+			// aapt resource value: 0x7f050002
+			public const int toolbar = 2131034114;
+			
+			// aapt resource value: 0x7f050008
+			public const int toolbar_title = 2131034120;
+			
+			// aapt resource value: 0x7f050003
+			public const int top_rated_list = 2131034115;
 			
 			static Id()
 			{
@@ -132,10 +194,16 @@ namespace MovieExplorer.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int Detail = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int MovieView = 2130903041;
+			public const int Main = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int MovieView = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int Toolbar = 2130903043;
 			
 			static Layout()
 			{
@@ -147,17 +215,33 @@ namespace MovieExplorer.Droid
 			}
 		}
 		
+		public partial class Menu
+		{
+			
+			// aapt resource value: 0x7f090000
+			public const int back_menu = 2131296256;
+			
+			static Menu()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Menu()
+			{
+			}
+		}
+		
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f050002
-			public const int ApplicationName = 2131034114;
+			// aapt resource value: 0x7f060001
+			public const int ApplicationName = 2131099649;
 			
-			// aapt resource value: 0x7f050001
-			public const int Hello = 2131034113;
+			// aapt resource value: 0x7f060002
+			public const int Close = 2131099650;
 			
-			// aapt resource value: 0x7f050000
-			public const int library_name = 2131034112;
+			// aapt resource value: 0x7f060000
+			public const int library_name = 2131099648;
 			
 			static String()
 			{
@@ -165,6 +249,22 @@ namespace MovieExplorer.Droid
 			}
 			
 			private String()
+			{
+			}
+		}
+		
+		public partial class Style
+		{
+			
+			// aapt resource value: 0x7f080000
+			public const int MyTheme = 2131230720;
+			
+			static Style()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Style()
 			{
 			}
 		}

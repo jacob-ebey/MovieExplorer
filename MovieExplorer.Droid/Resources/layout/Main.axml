@@ -1,23 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:local="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              xmlns:local="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+  <include
+        android:id="@+id/toolbar"
+        layout="@layout/Toolbar" />
 
-  <TextView android:text="Top Rated"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-  <cheesebaron.horizontallistview.HorizontalListView android:id="@+id/top_rated_list"
-                                                     android:layout_width="fill_parent"
-                                                     android:layout_height="200dp"
-                                                     Background="#ffb900" />
-  
-  <Button
-      android:id="@+id/MyButton"
+  <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/Hello"
-      local:MvxBind="Click ReloadCommand" />
+      android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+      <TextView
+          android:text="Top Rated"
+          android:textColor="@color/section_label_color"
+          android:textStyle="bold"
+          android:paddingLeft="10dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+      <cheesebaron.horizontallistview.HorizontalListView
+          android:id="@+id/top_rated_list"
+          android:layout_width="fill_parent"
+          android:layout_height="231dp"
+          Background="#ffb900" />
+      <TextView
+          android:text="Popular"
+          android:textColor="@color/section_label_color"
+          android:textStyle="bold"
+          android:paddingLeft="10dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+      <cheesebaron.horizontallistview.HorizontalListView
+          android:id="@+id/popular_list"
+          android:layout_width="fill_parent"
+          android:layout_height="231dp"
+          Background="#ffb900" />
+      <TextView
+          android:text="Now Playing"
+          android:textColor="@color/section_label_color"
+          android:textStyle="bold"
+          android:paddingLeft="10dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+      <cheesebaron.horizontallistview.HorizontalListView
+          android:id="@+id/now_playing_list"
+          android:layout_width="fill_parent"
+          android:layout_height="231dp"
+          Background="#ffb900" />
+      <Button
+          android:id="@+id/MyButton"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Refresh"
+          local:MvxBind="Click ReloadCommand" />
+    </LinearLayout>
+  </ScrollView>
 </LinearLayout>
