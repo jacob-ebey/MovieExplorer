@@ -103,11 +103,14 @@ namespace MovieExplorer.Droid
 		public partial class Color
 		{
 			
+			// aapt resource value: 0x7f070004
+			public const int background_color = 2131165188;
+			
 			// aapt resource value: 0x7f070003
-			public const int background_color = 2131165187;
+			public const int section_label_color = 2131165187;
 			
 			// aapt resource value: 0x7f070002
-			public const int section_label_color = 2131165186;
+			public const int text_color = 2131165186;
 			
 			// aapt resource value: 0x7f070000
 			public const int toolbar_color = 2131165184;
@@ -132,7 +135,10 @@ namespace MovieExplorer.Droid
 			public const int Icon = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int window_close = 2130837505;
+			public const int placeholder = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int window_close = 2130837506;
 			
 			static Drawable()
 			{
@@ -153,32 +159,35 @@ namespace MovieExplorer.Droid
 			// aapt resource value: 0x7f050001
 			public const int MvxBindingTagUnique = 2131034113;
 			
-			// aapt resource value: 0x7f050006
-			public const int MyButton = 2131034118;
+			// aapt resource value: 0x7f05000b
+			public const int action_back = 2131034123;
 			
 			// aapt resource value: 0x7f05000a
-			public const int action_back = 2131034122;
+			public const int close_image = 2131034122;
 			
-			// aapt resource value: 0x7f050009
-			public const int close_image = 2131034121;
-			
-			// aapt resource value: 0x7f050005
-			public const int now_playing_list = 2131034117;
-			
-			// aapt resource value: 0x7f050004
-			public const int popular_list = 2131034116;
+			// aapt resource value: 0x7f050003
+			public const int detail_poster_image = 2131034115;
 			
 			// aapt resource value: 0x7f050007
-			public const int poster_image = 2131034119;
+			public const int now_playing_list = 2131034119;
+			
+			// aapt resource value: 0x7f050006
+			public const int popular_list = 2131034118;
+			
+			// aapt resource value: 0x7f050008
+			public const int poster_image = 2131034120;
+			
+			// aapt resource value: 0x7f050004
+			public const int similar_list = 2131034116;
 			
 			// aapt resource value: 0x7f050002
 			public const int toolbar = 2131034114;
 			
-			// aapt resource value: 0x7f050008
-			public const int toolbar_title = 2131034120;
+			// aapt resource value: 0x7f050009
+			public const int toolbar_title = 2131034121;
 			
-			// aapt resource value: 0x7f050003
-			public const int top_rated_list = 2131034115;
+			// aapt resource value: 0x7f050005
+			public const int top_rated_list = 2131034117;
 			
 			static Id()
 			{
@@ -203,7 +212,10 @@ namespace MovieExplorer.Droid
 			public const int MovieView = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int Toolbar = 2130903043;
+			public const int SmallMovieView = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int Toolbar = 2130903044;
 			
 			static Layout()
 			{

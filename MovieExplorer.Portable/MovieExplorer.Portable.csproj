@@ -38,6 +38,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\FormatConverter.cs" />
+    <Compile Include="Converters\StringDateConverter.cs" />
     <Compile Include="Exceptions\MessageException.cs" />
     <Compile Include="MovieApp.cs" />
     <Compile Include="Models\MovieListResult.cs" />

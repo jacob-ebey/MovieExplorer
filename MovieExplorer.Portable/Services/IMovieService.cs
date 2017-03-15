@@ -1,4 +1,5 @@
 using MovieExplorer.Models;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace MovieExplorer.Services
@@ -37,5 +38,12 @@ namespace MovieExplorer.Services
         /// </summary>
         /// <returns>A result indicating success and the data.</returns>
         Task<ServiceResult<VideoResults>> GetVideosAsync(string movieId);
+
+        /// <summary>
+        /// Get's a stream for the movies poster.
+        /// </summary>
+        /// <param name="posterPath">The poster path.</param>
+        /// <returns>A stream for the image.</returns>
+        Task<Stream> GetMoviePosterAsync(string posterPath, string imageSize);
     }
 }

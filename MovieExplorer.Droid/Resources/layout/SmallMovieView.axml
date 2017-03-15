@@ -5,8 +5,8 @@
     android:layout_height="231dp">
     <ImageView
         android:id="@+id/poster_image"
-        android:layout_width="154dp"
-        android:layout_height="231dp"
+        android:layout_width="92dp"
+        android:layout_height="138dp"
         android:paddingLeft="10dp"
         android:cropToPadding="true"
         android:scaleType="centerCrop"

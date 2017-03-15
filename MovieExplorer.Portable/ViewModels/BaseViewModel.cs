@@ -10,10 +10,11 @@ namespace MovieExplorer.ViewModels
 {
     public class BaseViewModel : MvxViewModel, INotifyPropertyChanged
     {
-        private readonly Dictionary<string, List<Action<object>>> _observingCache = new Dictionary<string, List<Action<object>>>();
         private int _runningTaskCount = 0;
 
         public bool ShowLoader { get { return _runningTaskCount > 0; } }
+
+        public bool InverseShowLoader { get { return !ShowLoader; } }
 
         private string _errorMessage;
         public string ErrorMessage
@@ -26,6 +27,7 @@ namespace MovieExplorer.ViewModels
         {
             _runningTaskCount++;
             RaisePropertyChanged(nameof(ShowLoader));
+            RaisePropertyChanged(nameof(InverseShowLoader));
             try
             {
                 await asyncAction();
@@ -39,7 +41,12 @@ namespace MovieExplorer.ViewModels
             {
                 LogException(e);
             }
-
+            finally
+            {
+                _runningTaskCount--;
+                RaisePropertyChanged(nameof(ShowLoader));
+                RaisePropertyChanged(nameof(InverseShowLoader));
+            }
         }
 
         protected void LogException(Exception e)

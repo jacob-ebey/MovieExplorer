@@ -12,27 +12,46 @@ using System;
 using System.Collections.Generic;
 using Android.Views.Animations;
 using System.Windows.Input;
+using System.Threading;
+using MvvmCross.Platform;
+using MovieExplorer.Services;
 
 namespace MovieExplorer.Droid.Adapters
 {
-    class MovieAdapter : ObservableCollectionAdapter<MovieListResult>, IDisposable
+    /// <summary>
+    /// An adapter for the movies view.
+    /// </summary>
+    class MovieAdapter : ObservableCollectionAdapter<MovieListResult>
     {
-        private const int TouchTolerance = 4;
-        private const string ImageUrl = "http://image.tmdb.org/t/p/w342/{0}";
+        private const int TouchTolerance = 3;
 
         private readonly Dictionary<string, Drawable> _posterCache = new Dictionary<string, Drawable>();
         private object _posterSyncRoot = new object();
 
         private readonly Dictionary<View, MovieListResult> _itemCache = new Dictionary<View, MovieListResult>();
+        private readonly Dictionary<View, CancellationTokenSource> _uiSyncCache = new Dictionary<View, CancellationTokenSource>();
+        private object _uiCacheSyncRoot = new object();
 
+        private string _imageSize;
         private HttpClient _client;
+        private IMovieService _movieService;
 
-        public MovieAdapter(Activity context, ObservableCollection<MovieListResult> items)
-            : base(context, Resource.Layout.MovieView, items)
+        /// <summary>
+        /// Creates a new instance of <see cref="MovieAdapter"/>.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="items">The bindable collection to observe.</param>
+        public MovieAdapter(Activity context, ObservableCollection<MovieListResult> items, int resource = Resource.Layout.MovieView, string imageSize = "w154")
+            : base(context, resource, items)
         {
+            _imageSize = imageSize;
             _client = new HttpClient(new NativeMessageHandler());
+            _movieService = Mvx.Resolve<IMovieService>();
         }
 
+        /// <summary>
+        /// The command to raise with the item as a parameter when a movie is clicked.
+        /// </summary>
         public ICommand ClickedCommand { get; set; }
 
         protected override long GetItemId(MovieListResult item, int position)
@@ -62,10 +81,15 @@ namespace MovieExplorer.Droid.Adapters
                 {
                     if (Math.Abs(oldX - x) < TouchTolerance && Math.Abs(oldY - y) < TouchTolerance)
                     {
+                        // We get here if we have tapped the image but have not dragged our finger more than the allowed tolerance.
+                        // This is to get around a bug in the HorizontalListView, but it also is a place for us to introduce a nice little
+                        // animation.
                         (s as View).StartAnimation(AnimationUtils.LoadAnimation(Context, Resource.Animation.PosterClick));
 
+                        // Check to see if there is an item associated with the view.
                         if (_itemCache.ContainsKey(s as View))
                         {
+                            // If so, raise the clicked command assigned to this adapter.
                             MovieListResult item = _itemCache[s as View];
                             if (ClickedCommand?.CanExecute(item) ?? false)
                             {
@@ -82,46 +106,66 @@ namespace MovieExplorer.Droid.Adapters
             ImageView image = view.FindViewById<ImageView>(Resource.Id.poster_image);
             _itemCache[image] = item;
 
-            string src = string.Format(ImageUrl, item.PosterPath);
-            bool contains = false;
-
-            lock (_posterSyncRoot)
+            // Check to see if an image for the view is currently being loaded, if so cancel it.
+            // This will cause the image to be cached but not assigned to a view.
+            CancellationToken token = CancellationToken.None;
+            lock (_uiCacheSyncRoot)
             {
-                if (contains = _posterCache.ContainsKey(src))
+                if (_uiSyncCache.ContainsKey(image))
                 {
-                    image.SetImageDrawable(_posterCache[src]);
+                    _uiSyncCache[image].Cancel();
                 }
+
+                var tokenSource = new CancellationTokenSource();
+                token = tokenSource.Token;
+                _uiSyncCache[image] = tokenSource;
             }
 
-            if (!contains)
+
+            image.SetImageResource(Resource.Drawable.placeholder);
+            Task.Run(async () =>
             {
-                image.SetImageResource(Resource.Drawable.Icon);
-                Task.Run(async () =>
+                try
                 {
-                    try
-                    {
-                        using (var stream = await _client.GetStreamAsync(src))
-                        {
-                            var bitmap = await BitmapDrawable.CreateFromStreamAsync(stream, src);
-                            Context.RunOnUiThread(() =>
-                            {
-                                image.SetImageDrawable(bitmap);
-                            });
+                    var stream = await _movieService.GetMoviePosterAsync(item.PosterPath, _imageSize);
+                    var bitmap = await Drawable.CreateFromStreamAsync(stream, item.PosterPath);
 
-                            lock (_posterSyncRoot)
-                            {
-                                _posterCache[src] = bitmap;
-                            }
+                    Context.RunOnUiThread(() =>
+                    {
+                        // If the view has not been recycled, set the image.
+                        if (!token.IsCancellationRequested)
+                        {
+                            image.SetImageDrawable(bitmap);
                         }
-                    }
-                    catch { }
-                });
-            }
+                    });
+                }
+                catch (Exception e)
+                {
+                    // TODO: Log exception.
+
+                    Context.RunOnUiThread(() =>
+                    {
+                        // If the view has not been recycled, set the image.
+                        if (!token.IsCancellationRequested)
+                        {
+                            image.SetImageResource(Resource.Drawable.placeholder);
+                        }
+                    });
+                }
+            });
         }
 
-        void IDisposable.Dispose()
+        protected override void Dispose(bool disposing)
         {
+            if (disposing)
+            {
+                _posterCache.Clear();
+                _itemCache.Clear();
+                _uiSyncCache.Clear();
+                _client.Dispose();
+            }
 
+            base.Dispose(disposing);
         }
     }
 }
