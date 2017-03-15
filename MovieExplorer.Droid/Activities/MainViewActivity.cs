@@ -2,6 +2,7 @@
 using Cheesebaron.HorizontalListView;
 using MovieExplorer.Droid.Adapters;
 using MovieExplorer.Droid.Extensions;
+using MovieExplorer.Droid.Services;
 using MovieExplorer.ViewModels;
 using MvvmCross.Droid.Views;
 
@@ -10,6 +11,12 @@ namespace MovieExplorer.Droid.Activities
     [Activity(Label = "Movie Explorer", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/MyTheme")]
     public class MainViewActivity : MvxActivity<MainViewModel>
     {
+        protected override void OnResume()
+        {
+            base.OnResume();
+            ActivityTracker.CurrentActivity = this;
+        }
+
         protected override async void OnViewModelSet()
         {
             base.OnViewModelSet();

@@ -53,6 +53,11 @@ namespace MovieExplorer.Services
             return DoRequestAsync<VideoResults>(_endpoints.GetVideosUri(movieId));
         }
 
+        public Task<ServiceResult<ResultsModel<MovieListResult>>> SearchAsync(string query)
+        {
+            return DoRequestAsync<ResultsModel<MovieListResult>>(_endpoints.GetSearchUri(query));
+        }
+
         private async Task<ServiceResult<T>> DoRequestAsync<T>(Uri uri)
         {
             ServiceResult<T> result = new ServiceResult<T>();

@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 
 namespace MovieExplorer.Services
 {
@@ -11,6 +12,7 @@ namespace MovieExplorer.Services
         private const string _popularUrl = "http://api.themoviedb.org/3/movie/popular?api_key={0}&sort_by=popularity.des";
         private const string _similarUrl = "http://api.themoviedb.org/3/movie/{1}/similar?api_key={0}";
         private const string _videosUrl = "http://api.themoviedb.org/3/movie/{1}/videos?api_key={0}";
+        private const string _searchUrl = "https://api.themoviedb.org/3/search/movie?language=en-US&query={1}&include_adult=false&api_key={0}";
 
         public Uri NowPlayingUri
         {
@@ -44,6 +46,11 @@ namespace MovieExplorer.Services
         public Uri GetVideosUri(string movieId)
         {
             return new Uri(string.Format(_videosUrl, _apiKey, movieId));
+        }
+
+        public Uri GetSearchUri(string query)
+        {
+            return new Uri(string.Format(_searchUrl, _apiKey, WebUtility.UrlEncode(query)));
         }
     }
 }

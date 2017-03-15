@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using MovieExplorer.Converters;
 using MvvmCross.Platform.Converters;
+using MovieExplorer.Droid.Services;
 
 namespace MovieExplorer.Droid
 {
@@ -25,6 +26,8 @@ namespace MovieExplorer.Droid
 
             Mvx.RegisterType<IEndpointList, EndpointList>();
             Mvx.RegisterType<IMovieService, MovieService>();
+            Mvx.RegisterType<IToastService, ToastService>();
+            Mvx.RegisterType<IUriService, UriService>();
         }
 
         protected override void FillValueConverters(IMvxValueConverterRegistry registry)

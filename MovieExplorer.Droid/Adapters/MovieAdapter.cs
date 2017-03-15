@@ -24,10 +24,7 @@ namespace MovieExplorer.Droid.Adapters
     class MovieAdapter : ObservableCollectionAdapter<MovieListResult>
     {
         private const int TouchTolerance = 3;
-
-        private readonly Dictionary<string, Drawable> _posterCache = new Dictionary<string, Drawable>();
-        private object _posterSyncRoot = new object();
-
+        
         private readonly Dictionary<View, MovieListResult> _itemCache = new Dictionary<View, MovieListResult>();
         private readonly Dictionary<View, CancellationTokenSource> _uiSyncCache = new Dictionary<View, CancellationTokenSource>();
         private object _uiCacheSyncRoot = new object();
@@ -128,7 +125,7 @@ namespace MovieExplorer.Droid.Adapters
                 try
                 {
                     var stream = await _movieService.GetMoviePosterAsync(item.PosterPath, _imageSize);
-                    var bitmap = await Drawable.CreateFromStreamAsync(stream, item.PosterPath);
+                    var bitmap = await Drawable.CreateFromStreamAsync(stream, null);
 
                     Context.RunOnUiThread(() =>
                     {
@@ -159,7 +156,6 @@ namespace MovieExplorer.Droid.Adapters
         {
             if (disposing)
             {
-                _posterCache.Clear();
                 _itemCache.Clear();
                 _uiSyncCache.Clear();
                 _client.Dispose();

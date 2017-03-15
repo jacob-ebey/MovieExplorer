@@ -11,11 +11,17 @@ namespace MovieExplorer.ViewModels
 {
     class DetailViewModel : BaseViewModel
     {
-        private IMovieService _movieService;
+        private const string YoutubeUrl = "https://www.youtube.com/watch?v={0}";
 
-        public DetailViewModel(IMovieService movieService)
+        private IMovieService _movieService;
+        private IUriService _uriService;
+        private IToastService _toastService;
+
+        public DetailViewModel(IMovieService movieService, IUriService uriService, IToastService toastService)
         {
             _movieService = movieService;
+            _uriService = uriService;
+            _toastService = toastService;
 
             MovieSelectedCommand = new MvxCommand<MovieListResult>(r =>
             {
@@ -24,12 +30,32 @@ namespace MovieExplorer.ViewModels
                     ShowViewModel<DetailViewModel>(r);
                 }
             });
+
+            PlayVideoCommand = new MvxAsyncCommand(async () =>
+            {
+                await ShowLoaderAsync(async () =>
+                {
+                    var videoResult = await _movieService.GetVideosAsync(Movie.Id.ToString());
+
+                    if (videoResult.Succeeded && (videoResult.Data?.Results?.Any() ?? false))
+                    {
+                        var video = videoResult.Data.Results.First();
+                        uriService.OpenUrl(string.Format(YoutubeUrl, video.Key));
+                    }
+                    else
+                    {
+                        _toastService.ShowToast("No videos found :(", ToastDuration.Short);
+                    }
+                });
+            });
         }
 
         /// <summary>
         /// A command that expects a <see cref="MovieListResult"/> passed as the parameter.
         /// </summary>
         public ICommand MovieSelectedCommand { get; }
+
+        public ICommand PlayVideoCommand { get; }
 
         public ObservableCollection<MovieListResult> Similar { get; } = new ObservableCollection<MovieListResult>();
 

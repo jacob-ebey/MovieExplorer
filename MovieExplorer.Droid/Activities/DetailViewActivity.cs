@@ -10,12 +10,19 @@ using Android.Widget;
 using System;
 using Cheesebaron.HorizontalListView;
 using MovieExplorer.Droid.Adapters;
+using MovieExplorer.Droid.Services;
 
 namespace MovieExplorer.Droid.Activities
 {
     [Activity(Label = "Movie Explorer", Theme = "@style/MyTheme")]
     class DetailViewActivity : MvxActivity<DetailViewModel>
     {
+        protected override void OnResume()
+        {
+            base.OnResume();
+            ActivityTracker.CurrentActivity = this;
+        }
+
         protected override void OnViewModelSet()
         {
             base.OnViewModelSet();

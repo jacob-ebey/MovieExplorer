@@ -13,5 +13,7 @@ namespace MovieExplorer.Services
         Uri GetSimilarUri(string movieId);
 
         Uri GetVideosUri(string movieId);
+
+        Uri GetSearchUri(string query);
     }
 }

@@ -40,6 +40,13 @@ namespace MovieExplorer.Services
         Task<ServiceResult<VideoResults>> GetVideosAsync(string movieId);
 
         /// <summary>
+        /// Do a search.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>A result indicating success and the data.</returns>
+        Task<ServiceResult<ResultsModel<MovieListResult>>> SearchAsync(string query);
+
+        /// <summary>
         /// Get's a stream for the movies poster.
         /// </summary>
         /// <param name="posterPath">The poster path.</param>

@@ -51,6 +51,8 @@
     <Compile Include="Services\EndpointList.cs" />
     <Compile Include="Services\IEndpointList.cs" />
     <Compile Include="Services\IMovieService.cs" />
+    <Compile Include="Services\IToastService.cs" />
+    <Compile Include="Services\IUriService.cs" />
     <Compile Include="Services\MovieService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\DetailViewModel.cs" />
