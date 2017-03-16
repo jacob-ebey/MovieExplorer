@@ -15,6 +15,7 @@ namespace MovieExplorer.Droid.Activities
         {
             base.OnResume();
             ActivityTracker.CurrentActivity = this;
+            ViewModel?.OnResume();
         }
 
         protected override async void OnViewModelSet()
@@ -32,7 +33,10 @@ namespace MovieExplorer.Droid.Activities
 
             var nowPlayingList = FindViewById<HorizontalListView>(Resource.Id.now_playing_list);
             nowPlayingList.Adapter = new MovieAdapter(this, ViewModel.NowPlaying) { ClickedCommand = ViewModel.MovieSelectedCommand };
-            
+
+            var favoritesList = FindViewById<HorizontalListView>(Resource.Id.favorites_list);
+            favoritesList.Adapter = new MovieAdapter(this, ViewModel.Favorites) { ClickedCommand = ViewModel.MovieSelectedCommand };
+
             await ViewModel.OnNavigatedToAsync();
         }
     }

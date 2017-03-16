@@ -2,7 +2,7 @@
 
 namespace MovieExplorer.Services
 {
-    interface IUriService
+    public interface IUriService
     {
         void OpenUrl(string url);
     }

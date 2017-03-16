@@ -13,7 +13,7 @@
         android:indeterminateOnly="true"
         android:layout_gravity="center"
         local:MvxBind="Visible ShowLoader"
-        style="?android:attr/progressBarStyleLarge" />
+        style="?android:attr/progressBarStyleSmall" />
   <ScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -51,6 +51,27 @@
               android:layout_height="wrap_content"
               android:textColor="@color/text_color"
               local:MvxBind="Text Movie.ReleaseDate, Converter=StringDateConverter, ConverterParameter='Release Data: {0}'" />
+
+          <RatingBar
+              android:id="@+id/rating_bar"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:transformPivotX="0dp"
+              style="?android:attr/ratingBarStyleSmall"
+              android:scaleX="1.5"
+              android:scaleY="1.5"
+              android:numStars="5"
+              android:stepSize="0.1"
+              android:isIndicator="true"
+              local:MvxBind="Rating Movie.VoteAverageClamped" />
+          
+          <TextView
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:textColor="@color/text_color"
+              android:layout_marginTop="5dp"
+              local:MvxBind="Text Movie.VoteCount, Converter=FormatConverter, ConverterParameter='(from {0} votes)'" />
+
           <LinearLayout
               android:layout_width="fill_parent"
               android:layout_height="0dip"
@@ -58,22 +79,27 @@
               android:layout_weight="1"
               android:gravity="bottom">
             <Button
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:layout_gravity="bottom"
                 android:text="Play Video"
                 android:textColor="#ffffff"
                 android:background="#a3ca19"
                 local:MvxBind="Click PlayVideoCommand" />
             <Button
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:layout_gravity="bottom"
-                android:text="Save to Favorites"
                 android:textColor="#ffffff"
                 android:background="#dbb001"
                 android:layout_marginTop="10dp"
-                local:MvxBind="Click SaveToFavoritesCommand" />
+                local:MvxBind="Click AddToWatchlistCommand; Text WatchlistButtonText" />
           </LinearLayout>
         </LinearLayout>
       </LinearLayout>

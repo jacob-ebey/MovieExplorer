@@ -2,7 +2,7 @@
 
 namespace MovieExplorer.Services
 {
-    interface IEndpointList
+    public interface IEndpointList
     {
         Uri NowPlayingUri { get; }
 

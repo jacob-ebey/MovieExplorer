@@ -2,6 +2,7 @@
 using MovieExplorer.Models;
 using MovieExplorer.Services;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform.Core;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,19 +16,20 @@ namespace MovieExplorer.ViewModels
         private const string _errorMessageTemplate = "No {0} results found... Try reloading...";
 
         private IMovieService _movieService;
+        private IWatchlistService _watchlistService;
+
         private bool _isLoading = false;
+        private bool _reloadWatchlist = true;
 
         // Backing fields
-        private ObservableCollection<MovieListResult> _topRated, _popular, _nowPlaying;
         private string _topRatedErrorMessage, _popularErrorMessage, _nowPlayingErrorMessage;
 
-        public MainViewModel(IMovieService movieService)
+        public MainViewModel(IMovieService movieService, IWatchlistService watchlistService)
         {
             _movieService = movieService;
-
-            _topRated = new ObservableCollection<MovieListResult>();
-            _popular = new ObservableCollection<MovieListResult>();
-            _nowPlaying = new ObservableCollection<MovieListResult>();
+            _watchlistService = watchlistService;
+            
+            _watchlistService.Modified += (s, e) => _reloadWatchlist = true;
 
             ReloadCommand = new MvxAsyncCommand(async () =>
             {
@@ -52,15 +54,29 @@ namespace MovieExplorer.ViewModels
         /// A command that expects a <see cref="MovieListResult"/> passed as the parameter.
         /// </summary>
         public ICommand MovieSelectedCommand { get; }
+        
+        /// <summary>
+        /// If the user has any favorites.
+        /// </summary>
+        public bool HasFavorites
+        {
+            get { return Favorites.Any(); }
+        }
+
+        /// <summary>
+        /// Inverse of <see cref="HasFavorites"/>.
+        /// </summary>
+        public bool InverseHasFavorites { get { return !HasFavorites; } }
+
+        /// <summary>
+        /// The favorited movies.
+        /// </summary>
+        public ObservableCollection<MovieListResult> Favorites { get; } = new ObservableCollection<MovieListResult>();
 
         /// <summary>
         /// The top rated movies.
         /// </summary>
-        public ObservableCollection<MovieListResult> TopRated
-        {
-            get { return _topRated; }
-            set { SetProperty(ref _topRated, value); }
-        }
+        public ObservableCollection<MovieListResult> TopRated { get; } = new ObservableCollection<MovieListResult>();
 
         /// <summary>
         /// The error message for the top rated context if an issue arises loading the data.
@@ -74,11 +90,7 @@ namespace MovieExplorer.ViewModels
         /// <summary>
         /// The popular movies.
         /// </summary>
-        public ObservableCollection<MovieListResult> Popular
-        {
-            get { return _popular; }
-            set { SetProperty(ref _popular, value); }
-        }
+        public ObservableCollection<MovieListResult> Popular { get; } = new ObservableCollection<MovieListResult>();
 
         /// <summary>
         /// The error message for the popular context if an issue arises loading the data.
@@ -92,11 +104,7 @@ namespace MovieExplorer.ViewModels
         /// <summary>
         /// Movies that are now playing in theaters.
         /// </summary>
-        public ObservableCollection<MovieListResult> NowPlaying
-        {
-            get { return _nowPlaying; }
-            set { SetProperty(ref _nowPlaying, value); }
-        }
+        public ObservableCollection<MovieListResult> NowPlaying { get; } = new ObservableCollection<MovieListResult>();
 
         /// <summary>
         /// The error message for the now playing context if an issue arises loading the data.
@@ -107,13 +115,38 @@ namespace MovieExplorer.ViewModels
             set { SetProperty(ref _nowPlayingErrorMessage, value); }
         }
 
+        public void OnResume()
+        {
+            ReloadWatchlist();
+        }
+
         /// <summary>
         /// Call this when the page has been navigated to.
         /// </summary>
         /// <returns></returns>
         public Task OnNavigatedToAsync()
         {
+            _watchlistService.Load();
+
             return LoadAllCategoriesAsync();
+        }
+
+        private void ReloadWatchlist()
+        {
+            if (_reloadWatchlist)
+            {
+                Favorites.Clear();
+                // Show the newest first
+                foreach (var item in _watchlistService.Favorites.Reverse())
+                {
+                    Favorites.Add(item);
+                }
+
+                RaisePropertyChanged(nameof(HasFavorites));
+                RaisePropertyChanged(nameof(InverseHasFavorites));
+
+                _reloadWatchlist = false;
+            }
         }
 
         private Task LoadAllCategoriesAsync()
@@ -139,6 +172,8 @@ namespace MovieExplorer.ViewModels
                     var topRatedTask = _movieService.GetTopRatedAsync();
                     var popularTask = _movieService.GetPopularAsync();
                     var nowPlayingTask = _movieService.GetNowPlayingAsync();
+
+                    ReloadWatchlist();
 
                     // Await for all results
                     var topRatedResult = await topRatedTask;

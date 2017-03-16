@@ -1,14 +1,16 @@
-﻿using MovieExplorer.ViewModels;
+﻿using MovieExplorer.Services;
+using MovieExplorer.ViewModels;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 
 namespace MovieExplorer
 {
-    class MovieApp : MvxApplication
+    public class MovieApp : MvxApplication
     {
         public override void Initialize()
         {
             base.Initialize();
-
+            
             RegisterAppStart<MainViewModel>();
         }
     }

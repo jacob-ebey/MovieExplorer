@@ -5,8 +5,8 @@
     <item name="android:colorBackground">@color/background_color</item>
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowActionBar">false</item>
-    <item name="android:colorPrimary">#2196F3</item>
-    <item name="android:colorPrimaryDark">#1976D2</item>
-    <item name="android:colorAccent">#FF4081</item>
+    <item name="android:colorPrimary">@color/toolbar_font_color</item>
+    <item name="android:colorPrimaryDark">@color/toolbar_font_color</item>
+    <item name="android:colorAccent">@color/toolbar_font_color</item>
   </style>
 </resources>

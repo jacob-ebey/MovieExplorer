@@ -13,7 +13,7 @@
       android:indeterminateOnly="true"
       android:layout_gravity="center"
       local:MvxBind="Visible ShowLoader"
-      style="?android:attr/progressBarStyleLarge" />
+      style="?android:attr/progressBarStyleSmall" />
   <ScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -60,6 +60,29 @@
           android:id="@+id/now_playing_list"
           android:layout_width="fill_parent"
           android:layout_height="231dp" />
+
+      <TextView
+          android:text="Favorites"
+          android:textColor="@color/section_label_color"
+          android:textStyle="bold"
+          android:textSize="16dp"
+          android:paddingLeft="10dp"
+          android:paddingTop="10dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content" />
+      <!--TODO: Add error labels for the other lists in case one of the service calls fail in the VM-->
+      <TextView
+          android:text="No favorites yet :("
+          android:textColor="@color/text_color"
+          android:paddingLeft="20dp"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          local:MvxBind="Visible InverseHasFavorites" />
+      <cheesebaron.horizontallistview.HorizontalListView
+          android:id="@+id/favorites_list"
+          android:layout_width="fill_parent"
+          android:layout_height="231dp"
+          local:MvxBind="Visible HasFavorites" />
 
       <Button
             android:layout_width="match_parent"

@@ -1,25 +1,30 @@
-﻿using System;
-using MovieExplorer.Models;
+﻿using MovieExplorer.Models;
 using MovieExplorer.Services;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MvvmCross.Core.ViewModels;
 using System.Windows.Input;
+using MvvmCross.Platform.Core;
 
 namespace MovieExplorer.ViewModels
 {
-    class DetailViewModel : BaseViewModel
+    public class DetailViewModel : BaseViewModel
     {
         private const string YoutubeUrl = "https://www.youtube.com/watch?v={0}";
 
+        private const string AddToWatchlistLabel = "Add to favorites";
+        private const string RemoveFromWatchlistLabel = "Remove from favorites";
+
         private IMovieService _movieService;
+        private IWatchlistService _watchlistService;
         private IUriService _uriService;
         private IToastService _toastService;
 
-        public DetailViewModel(IMovieService movieService, IUriService uriService, IToastService toastService)
+        public DetailViewModel(IMovieService movieService, IWatchlistService watchlistService, IUriService uriService, IToastService toastService)
         {
             _movieService = movieService;
+            _watchlistService = watchlistService;
             _uriService = uriService;
             _toastService = toastService;
 
@@ -48,6 +53,20 @@ namespace MovieExplorer.ViewModels
                     }
                 });
             });
+
+            AddToWatchlistCommand = new MvxCommand(() =>
+            {
+                if (_watchlistService.Contains(Movie.Id))
+                {
+                    _watchlistService.Remove(Movie.Id);
+                    WatchlistButtonText = AddToWatchlistLabel;
+                }
+                else
+                {
+                    _watchlistService.Add(Movie);
+                    WatchlistButtonText = RemoveFromWatchlistLabel;
+                }
+            });
         }
 
         /// <summary>
@@ -57,12 +76,23 @@ namespace MovieExplorer.ViewModels
 
         public ICommand PlayVideoCommand { get; }
 
+        public ICommand AddToWatchlistCommand { get; }
+
+        private string _watchlistButtonText = AddToWatchlistLabel;
+        public string WatchlistButtonText
+        {
+            get { return _watchlistButtonText; }
+            set { SetProperty(ref _watchlistButtonText, value); }
+        }
+
         public ObservableCollection<MovieListResult> Similar { get; } = new ObservableCollection<MovieListResult>();
 
         public void Init(MovieListResult movie)
         {
             Movie = movie;
-
+            
+            WatchlistButtonText = _watchlistService.Contains(movie.Id) ? RemoveFromWatchlistLabel : AddToWatchlistLabel;
+            
             var _ = LoadSimilarAsync();
         }
 

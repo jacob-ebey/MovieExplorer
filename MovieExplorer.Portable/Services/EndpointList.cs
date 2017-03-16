@@ -3,7 +3,7 @@ using System.Net;
 
 namespace MovieExplorer.Services
 {
-    class EndpointList : IEndpointList
+    public class EndpointList : IEndpointList
     {
         private const string _apiKey = "ab41356b33d100ec61e6c098ecc92140";
 

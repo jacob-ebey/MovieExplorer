@@ -4,9 +4,9 @@ using System.Globalization;
 
 namespace MovieExplorer.Converters
 {
-    public class FormatConverter : MvxValueConverter<string, string>
+    public class FormatConverter : MvxValueConverter
     {
-        protected override string Convert(string value, Type targetType, object parameter, CultureInfo culture)
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return string.Format(parameter as string, value);
         }

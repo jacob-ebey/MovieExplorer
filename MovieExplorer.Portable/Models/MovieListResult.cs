@@ -46,5 +46,13 @@ namespace MovieExplorer.Models
 
         [JsonProperty("vote_average")]
         public double VoteAverage { get; set; }
+
+        public double VoteAverageClamped
+        {
+            get
+            {
+                return 5.0 * VoteAverage / 10.0;
+            }
+        }
     }
 }

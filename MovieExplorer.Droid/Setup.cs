@@ -24,10 +24,15 @@ namespace MovieExplorer.Droid
 
             MvxSimpleIoCContainer.Initialize();
 
-            Mvx.RegisterType<IEndpointList, EndpointList>();
-            Mvx.RegisterType<IMovieService, MovieService>();
+            // PCL Services
+            Mvx.RegisterSingleton<IEndpointList>(new EndpointList());
+            Mvx.LazyConstructAndRegisterSingleton<IMovieService>(() => new MovieService(Mvx.Resolve<IEndpointList>()));
+            Mvx.LazyConstructAndRegisterSingleton<IWatchlistService>(() => new WatchlistService(Mvx.Resolve<IFileService>()));
+
+            // Native Services
             Mvx.RegisterType<IToastService, ToastService>();
             Mvx.RegisterType<IUriService, UriService>();
+            Mvx.RegisterType<IFileService, FileService>();
         }
 
         protected override void FillValueConverters(IMvxValueConverterRegistry registry)

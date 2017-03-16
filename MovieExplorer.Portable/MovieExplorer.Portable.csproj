@@ -50,10 +50,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EndpointList.cs" />
     <Compile Include="Services\IEndpointList.cs" />
+    <Compile Include="Services\IFileService.cs" />
     <Compile Include="Services\IMovieService.cs" />
     <Compile Include="Services\IToastService.cs" />
     <Compile Include="Services\IUriService.cs" />
+    <Compile Include="Services\IWatchlistService.cs" />
     <Compile Include="Services\MovieService.cs" />
+    <Compile Include="Services\WatchlistService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\DetailViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

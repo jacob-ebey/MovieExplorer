@@ -103,6 +103,15 @@ namespace MovieExplorer.Droid.Adapters
             ImageView image = view.FindViewById<ImageView>(Resource.Id.poster_image);
             _itemCache[image] = item;
 
+            var oldBitmap = image.Drawable as BitmapDrawable;
+            if (oldBitmap != null)
+            {
+                // Dispose of old bitmaps so we don't have a memory leak, no one likes those.
+                image.SetImageDrawable(null);
+                oldBitmap.Dispose();
+                oldBitmap = null;
+            }
+
             // Check to see if an image for the view is currently being loaded, if so cancel it.
             // This will cause the image to be cached but not assigned to a view.
             CancellationToken token = CancellationToken.None;
@@ -124,8 +133,11 @@ namespace MovieExplorer.Droid.Adapters
             {
                 try
                 {
-                    var stream = await _movieService.GetMoviePosterAsync(item.PosterPath, _imageSize);
-                    var bitmap = await Drawable.CreateFromStreamAsync(stream, null);
+                    Drawable bitmap = null;
+                    using (var stream = await _movieService.GetMoviePosterAsync(item.PosterPath, _imageSize))
+                    {
+                        bitmap = await Drawable.CreateFromStreamAsync(stream, null);
+                    }
 
                     Context.RunOnUiThread(() =>
                     {
