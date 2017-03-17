@@ -27,7 +27,7 @@ namespace MovieExplorer.Droid.UITests
         [Test]
         public void AppLaunchesAndLoadsItems()
         {
-            app.Screenshot("First screen.");
+            app.Screenshot("First page");
 
             app.WaitForElement("poster_image", "No items were loaded.");
         }
@@ -35,13 +35,11 @@ namespace MovieExplorer.Droid.UITests
         [Test]
         public void CanShowDetail()
         {
-            app.Screenshot("First screen.");
-
-            var posterImage = app
-                .WaitForElement("poster_image", "No items were loaded.")
-                .First();
+            AppLaunchesAndLoadsItems();
 
             app.Tap("poster_image");
+
+            app.Screenshot("Detail page");
 
             var button = app
                 .WaitForElement("favorite_button", "Couldn't find the favorites button.")
@@ -57,13 +55,18 @@ namespace MovieExplorer.Droid.UITests
 
             app.Tap("favorite_button");
 
+            app.Screenshot("Added to favorites");
+
             var button = app
                 .WaitForElement("favorite_button", "Couldn't find the favorites button.")
                 .First();
 
+
             Assert.AreEqual(DetailViewModel.RemoveFromFavoritesLabel, button.Text, "The favorite button label was no the expected value.");
 
             app.Back();
+
+            app.Screenshot("Go back");
 
             app.WaitForElement("favorites_list", "Couldn't find the favorites list.");
         }
@@ -71,13 +74,23 @@ namespace MovieExplorer.Droid.UITests
         [Test]
         public void CanSearch()
         {
+            AppLaunchesAndLoadsItems();
+
             app.WaitForElement("search_image", "Couldn't find the search image.");
             app.Tap("search_image");
+            app.Screenshot("Search page");
+
             app.WaitForElement("search_entry", "Couldn't verify the search page opened.");
             app.EnterText("search_entry", "Fight Club");
+
+            app.Screenshot("Entered text");
+
             app.WaitForElement("poster_image", "Coulnd't find any results.");
             app.Tap("poster_image");
+
             app.WaitForElement("favorite_button", "Couldn't verify a detail page opened.");
+
+            app.Screenshot("Detail page");
         }
     }
 }
