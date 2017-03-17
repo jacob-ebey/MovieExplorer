@@ -4,7 +4,6 @@ using MovieExplorer.Views;
 using MovieExplorer.Models;
 using System.Collections.ObjectModel;
 using System.Net.Http;
-using ModernHttpClient;
 using System.Threading.Tasks;
 using Android.Graphics.Drawables;
 using Android.Widget;
