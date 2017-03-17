@@ -1,9 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 using Xamarin.UITest;
-using Xamarin.UITest.Queries;
 using Xamarin.UITest.Android;
 using Xamarin.UITest.Configuration;
 using MovieExplorer.ViewModels;
@@ -66,8 +63,6 @@ namespace MovieExplorer.Droid.UITests
 
             app.Back();
 
-            app.Screenshot("Go back");
-
             app.WaitForElement("favorites_list", "Couldn't find the favorites list.");
         }
 
@@ -86,11 +81,12 @@ namespace MovieExplorer.Droid.UITests
             app.Screenshot("Entered text");
 
             app.WaitForElement("poster_image", "Coulnd't find any results.");
+
+            app.Screenshot("Search results");
+
             app.Tap("poster_image");
 
             app.WaitForElement("favorite_button", "Couldn't verify a detail page opened.");
-
-            app.Screenshot("Detail page");
         }
     }
 }
