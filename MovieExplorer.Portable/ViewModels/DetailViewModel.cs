@@ -13,18 +13,18 @@ namespace MovieExplorer.ViewModels
     {
         private const string YoutubeUrl = "https://www.youtube.com/watch?v={0}";
 
-        private const string AddToWatchlistLabel = "Add to favorites";
-        private const string RemoveFromWatchlistLabel = "Remove from favorites";
+        public const string AddToFavoritesLabel = "Add to favorites";
+        public const string RemoveFromFavoritesLabel = "Remove from favorites";
 
         private IMovieService _movieService;
-        private IFavoritesService _watchlistService;
+        private IFavoritesService _favoritesService;
         private IUriService _uriService;
         private IToastService _toastService;
 
-        public DetailViewModel(IMovieService movieService, IFavoritesService watchlistService, IUriService uriService, IToastService toastService)
+        public DetailViewModel(IMovieService movieService, IFavoritesService favoritesService, IUriService uriService, IToastService toastService)
         {
             _movieService = movieService;
-            _watchlistService = watchlistService;
+            _favoritesService = favoritesService;
             _uriService = uriService;
             _toastService = toastService;
 
@@ -46,30 +46,30 @@ namespace MovieExplorer.ViewModels
                 });
             });
 
-            AddToWatchlistCommand = new MvxCommand(() =>
+            AddToFavoritesCommand = new MvxCommand(() =>
             {
-                if (_watchlistService.Contains(Movie.Id))
+                if (_favoritesService.Contains(Movie.Id))
                 {
-                    _watchlistService.Remove(Movie.Id);
-                    WatchlistButtonText = AddToWatchlistLabel;
+                    _favoritesService.Remove(Movie.Id);
+                    FavoritesButtonText = AddToFavoritesLabel;
                 }
                 else
                 {
-                    _watchlistService.Add(Movie);
-                    WatchlistButtonText = RemoveFromWatchlistLabel;
+                    _favoritesService.Add(Movie);
+                    FavoritesButtonText = RemoveFromFavoritesLabel;
                 }
             });
         }
 
         public ICommand PlayVideoCommand { get; }
 
-        public ICommand AddToWatchlistCommand { get; }
+        public ICommand AddToFavoritesCommand { get; }
 
-        private string _watchlistButtonText = AddToWatchlistLabel;
-        public string WatchlistButtonText
+        private string _favoritesButtonText = AddToFavoritesLabel;
+        public string FavoritesButtonText
         {
-            get { return _watchlistButtonText; }
-            set { SetProperty(ref _watchlistButtonText, value); }
+            get { return _favoritesButtonText; }
+            set { SetProperty(ref _favoritesButtonText, value); }
         }
 
         public ObservableCollection<MovieListResult> Similar { get; } = new ObservableCollection<MovieListResult>();
@@ -86,7 +86,7 @@ namespace MovieExplorer.ViewModels
         {
             Movie = movie;
             
-            WatchlistButtonText = _watchlistService.Contains(movie.Id) ? RemoveFromWatchlistLabel : AddToWatchlistLabel;
+            FavoritesButtonText = _favoritesService.Contains(movie.Id) ? RemoveFromFavoritesLabel : AddToFavoritesLabel;
             
             var _ = LoadSimilarAsync();
         }

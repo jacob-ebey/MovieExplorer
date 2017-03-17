@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{09AE536F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieExplorer.Portable.Tests", "MovieExplorer.Portable.Tests\MovieExplorer.Portable.Tests.csproj", "{984AFA02-DC3C-4340-A5FC-EC6826935805}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieExplorer.Droid.UITests", "MovieExplorer.Droid.UITests\MovieExplorer.Droid.UITests.csproj", "{51789E85-8010-4B33-97B0-607271076174}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,11 +33,16 @@ Global
 		{984AFA02-DC3C-4340-A5FC-EC6826935805}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{984AFA02-DC3C-4340-A5FC-EC6826935805}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{984AFA02-DC3C-4340-A5FC-EC6826935805}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51789E85-8010-4B33-97B0-607271076174}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51789E85-8010-4B33-97B0-607271076174}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51789E85-8010-4B33-97B0-607271076174}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51789E85-8010-4B33-97B0-607271076174}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{984AFA02-DC3C-4340-A5FC-EC6826935805} = {09AE536F-CB72-4792-BEEA-C5AB85EE9C7B}
+		{51789E85-8010-4B33-97B0-607271076174} = {09AE536F-CB72-4792-BEEA-C5AB85EE9C7B}
 	EndGlobalSection
 EndGlobal
