@@ -18,9 +18,6 @@ namespace MovieExplorer.Droid.UITests
         [SetUp]
         public void BeforeEachTest()
         {
-            // TODO: If the Android app being tested is included in the solution then open
-            // the Unit Tests window, right click Test Apps, select Add App Project
-            // and select the app projects that should be tested.
             app = ConfigureApp
                 .Android
                 .ApkFile ("../../../MovieExplorer.Droid/bin/Release/com.ebey.movieexplorer.apk")
