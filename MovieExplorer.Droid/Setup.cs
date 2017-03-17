@@ -30,9 +30,9 @@ namespace MovieExplorer.Droid
             Mvx.LazyConstructAndRegisterSingleton<IWatchlistService>(() => new WatchlistService(Mvx.Resolve<IFileService>()));
 
             // Native Services
-            Mvx.RegisterType<IToastService, ToastService>();
-            Mvx.RegisterType<IUriService, UriService>();
-            Mvx.RegisterType<IFileService, FileService>();
+            Mvx.RegisterSingleton<IToastService>(new ToastService());
+            Mvx.RegisterSingleton<IUriService>(new UriService());
+            Mvx.RegisterSingleton<IFileService>(new FileService());
         }
 
         protected override void FillValueConverters(IMvxValueConverterRegistry registry)

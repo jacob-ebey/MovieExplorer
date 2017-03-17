@@ -53,6 +53,7 @@ namespace MovieExplorer.Models
             {
                 return 5.0 * VoteAverage / 10.0;
             }
+            set { }
         }
     }
 }
