@@ -16,7 +16,7 @@ namespace MovieExplorer.Droid.Activities
     [Activity(Label = "Movie Explorer", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
     public class MainViewActivity : BaseActivity<MainViewModel>
     {
-        bool _alreadySentLastException;
+        static bool _alreadySentLastException;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -28,7 +28,7 @@ namespace MovieExplorer.Droid.Activities
                 Mvx.Resolve<IToastService>().ShowToast(
                     "Sorry about that crash, our top engineers are on it!",
                     ToastDuration.Long);
-
+                
                 var _ = Task.Run(async () =>
                 {
                     var report = await Crashes.GetLastSessionCrashReportAsync();
