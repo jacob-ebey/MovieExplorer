@@ -16,7 +16,7 @@ namespace MovieExplorer.ViewModels
         private const string _errorMessageTemplate = "No {0} results found... Try reloading...";
 
         private IMovieService _movieService;
-        private IWatchlistService _watchlistService;
+        private IFavoritesService _watchlistService;
 
         private bool _isLoading = false;
         private bool _reloadWatchlist = true;
@@ -24,37 +24,28 @@ namespace MovieExplorer.ViewModels
         // Backing fields
         private string _topRatedErrorMessage, _popularErrorMessage, _nowPlayingErrorMessage;
 
-        public MainViewModel(IMovieService movieService, IWatchlistService watchlistService)
+        public MainViewModel(IMovieService movieService, IFavoritesService watchlistService)
         {
             _movieService = movieService;
             _watchlistService = watchlistService;
             
             _watchlistService.Modified += (s, e) => _reloadWatchlist = true;
 
+            SearchCommand = new MvxCommand(() => ShowViewModel<SearchViewModel>());
+
             ReloadCommand = new MvxAsyncCommand(async () =>
             {
                 await LoadAllCategoriesAsync();
             });
-
-            MovieSelectedCommand = new MvxCommand<MovieListResult>(r =>
-            {
-                if (r != null)
-                {
-                    ShowViewModel<DetailViewModel>(r);
-                }
-            });
         }
+
+        public ICommand SearchCommand { get; }
 
         /// <summary>
         /// A command that reloads the entire pages content.
         /// </summary>
         public ICommand ReloadCommand { get; }
-
-        /// <summary>
-        /// A command that expects a <see cref="MovieListResult"/> passed as the parameter.
-        /// </summary>
-        public ICommand MovieSelectedCommand { get; }
-        
+                
         /// <summary>
         /// If the user has any favorites.
         /// </summary>
@@ -115,7 +106,7 @@ namespace MovieExplorer.ViewModels
             set { SetProperty(ref _nowPlayingErrorMessage, value); }
         }
 
-        public void OnResume()
+        public override void OnResume()
         {
             ReloadWatchlist();
         }

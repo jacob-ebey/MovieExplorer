@@ -130,16 +130,18 @@ namespace MovieExplorer.Services
 
             // Copy the result to a new stream so android doesn't loose it's shit
             MemoryStream result = null;
-            lock (stream)
+            if (stream != null)
             {
-                if (stream != null)
+                lock (stream)
                 {
+
                     try
                     {
                         result = new MemoryStream();
 
                         stream.Seek(0, SeekOrigin.Begin);
                         stream.CopyTo(result);
+                        result.Seek(0, SeekOrigin.Begin);
                     }
                     catch (Exception e)
                     {
@@ -148,7 +150,6 @@ namespace MovieExplorer.Services
                 }
             }
 
-            result?.Seek(0, SeekOrigin.Begin);
             return result;
         }
     }

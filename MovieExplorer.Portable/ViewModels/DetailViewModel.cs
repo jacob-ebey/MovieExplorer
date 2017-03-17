@@ -17,24 +17,16 @@ namespace MovieExplorer.ViewModels
         private const string RemoveFromWatchlistLabel = "Remove from favorites";
 
         private IMovieService _movieService;
-        private IWatchlistService _watchlistService;
+        private IFavoritesService _watchlistService;
         private IUriService _uriService;
         private IToastService _toastService;
 
-        public DetailViewModel(IMovieService movieService, IWatchlistService watchlistService, IUriService uriService, IToastService toastService)
+        public DetailViewModel(IMovieService movieService, IFavoritesService watchlistService, IUriService uriService, IToastService toastService)
         {
             _movieService = movieService;
             _watchlistService = watchlistService;
             _uriService = uriService;
             _toastService = toastService;
-
-            MovieSelectedCommand = new MvxCommand<MovieListResult>(r =>
-            {
-                if (r != null)
-                {
-                    ShowViewModel<DetailViewModel>(r);
-                }
-            });
 
             PlayVideoCommand = new MvxAsyncCommand(async () =>
             {
@@ -69,11 +61,6 @@ namespace MovieExplorer.ViewModels
             });
         }
 
-        /// <summary>
-        /// A command that expects a <see cref="MovieListResult"/> passed as the parameter.
-        /// </summary>
-        public ICommand MovieSelectedCommand { get; }
-
         public ICommand PlayVideoCommand { get; }
 
         public ICommand AddToWatchlistCommand { get; }
@@ -87,6 +74,14 @@ namespace MovieExplorer.ViewModels
 
         public ObservableCollection<MovieListResult> Similar { get; } = new ObservableCollection<MovieListResult>();
 
+        /// <summary>
+        /// If the user has any favorites.
+        /// </summary>
+        public bool HasSimilar
+        {
+            get { return Similar.Any(); }
+        }
+
         public void Init(MovieListResult movie)
         {
             Movie = movie;
@@ -99,6 +94,7 @@ namespace MovieExplorer.ViewModels
         private async Task LoadSimilarAsync()
         {
             Similar.Clear();
+            RaisePropertyChanged(nameof(HasSimilar));
 
             await ShowLoaderAsync(async () =>
             {
@@ -111,7 +107,10 @@ namespace MovieExplorer.ViewModels
                         Similar.Add(item);
                     }
                 }
+
+                RaisePropertyChanged(nameof(HasSimilar));
             });
+
         }
 
         private MovieListResult _movie;

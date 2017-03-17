@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Threading;
 using MvvmCross.Platform;
 using MovieExplorer.Services;
+using System.IO;
 
 namespace MovieExplorer.Droid.Adapters
 {
@@ -24,7 +25,7 @@ namespace MovieExplorer.Droid.Adapters
     class MovieAdapter : ObservableCollectionAdapter<MovieListResult>
     {
         private const int TouchTolerance = 3;
-        
+
         private readonly Dictionary<View, MovieListResult> _itemCache = new Dictionary<View, MovieListResult>();
         private readonly Dictionary<View, CancellationTokenSource> _uiSyncCache = new Dictionary<View, CancellationTokenSource>();
         private object _uiCacheSyncRoot = new object();
@@ -81,7 +82,7 @@ namespace MovieExplorer.Droid.Adapters
                         // We get here if we have tapped the image but have not dragged our finger more than the allowed tolerance.
                         // This is to get around a bug in the HorizontalListView, but it also is a place for us to introduce a nice little
                         // animation.
-                        (s as View).StartAnimation(AnimationUtils.LoadAnimation(Context, Resource.Animation.PosterClick));
+                        (s as View).StartAnimation(AnimationUtils.LoadAnimation(Context, Resource.Animation.ClickAnimation));
 
                         // Check to see if there is an item associated with the view.
                         if (_itemCache.ContainsKey(s as View))
@@ -131,27 +132,40 @@ namespace MovieExplorer.Droid.Adapters
             image.SetImageResource(Resource.Drawable.placeholder);
             Task.Run(async () =>
             {
+                bool setDefault = false;
                 try
                 {
                     Drawable bitmap = null;
-                    using (var stream = await _movieService.GetMoviePosterAsync(item.PosterPath, _imageSize))
+                    Stream stream = await _movieService.GetMoviePosterAsync(item.PosterPath, _imageSize);
+                    if (stream != null)
                     {
-                        bitmap = await Drawable.CreateFromStreamAsync(stream, null);
-                    }
-
-                    Context.RunOnUiThread(() =>
-                    {
-                        // If the view has not been recycled, set the image.
-                        if (!token.IsCancellationRequested)
+                        using (stream)
                         {
-                            image.SetImageDrawable(bitmap);
+                            bitmap = await Drawable.CreateFromStreamAsync(stream, null);
                         }
-                    });
+
+                        Context.RunOnUiThread(() =>
+                        {
+                            // If the view has not been recycled, set the image.
+                            if (!token.IsCancellationRequested)
+                            {
+                                image.SetImageDrawable(bitmap);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        setDefault = true;
+                    }
                 }
                 catch (Exception e)
                 {
                     // TODO: Log exception.
+                    setDefault = true;
+                }
 
+                if (setDefault)
+                {
                     Context.RunOnUiThread(() =>
                     {
                         // If the view has not been recycled, set the image.

@@ -20,6 +20,14 @@
             android:textSize="16dp"
             android:textStyle="bold"
             android:textColor="@color/toolbar_font_color" />
+
+    <ImageView android:id="@+id/search_image"
+               android:visibility="gone"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="right|center_vertical"
+               android:padding="10dp"
+               android:src="@drawable/search" />
     
     <ImageView android:id="@+id/close_image"
                android:visibility="gone"

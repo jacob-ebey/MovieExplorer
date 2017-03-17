@@ -107,11 +107,17 @@
       <HintPath>..\packages\Validation.2.4.13\lib\netstandard1.3\Validation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Xamarin.Android.Support.v4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.21.0.3.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="3rdParty\Views\HorizontalListView.cs" />
     <Compile Include="3rdParty\Views\ObservableCollectionAdapter.cs" />
+    <Compile Include="Activities\BaseActivity.cs" />
     <Compile Include="Activities\DetailViewActivity.cs" />
+    <Compile Include="Activities\SearchViewActivity.cs" />
     <Compile Include="Activities\MainViewActivity.cs" />
     <Compile Include="Adapters\MovieAdapter.cs" />
     <Compile Include="Extensions\ActivityExtensions.cs" />
@@ -126,7 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\MovieView.axml">
@@ -139,6 +147,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\SmallMovieView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Search.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -166,7 +177,7 @@
     <AndroidResource Include="Resources\values\Color.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\anim\PosterClick.xml" />
+    <AndroidResource Include="Resources\anim\ClickAnimation.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Styles.xml" />
@@ -179,6 +190,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\search.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,16 +1,34 @@
 ﻿using MovieExplorer.Exceptions;
+using MovieExplorer.Models;
 using MvvmCross.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MovieExplorer.ViewModels
 {
-    public class BaseViewModel : MvxViewModel, INotifyPropertyChanged
+    public abstract class BaseViewModel : MvxViewModel, INotifyPropertyChanged
     {
         private int _runningTaskCount = 0;
+
+        protected BaseViewModel()
+        {
+            MovieSelectedCommand = new MvxCommand<MovieListResult>(r =>
+            {
+                if (r != null)
+                {
+                    ShowViewModel<DetailViewModel>(r);
+                }
+            });
+        }
+
+        /// <summary>
+        /// A command that expects a <see cref="MovieListResult"/> passed as the parameter.
+        /// </summary>
+        public ICommand MovieSelectedCommand { get; }
 
         public bool ShowLoader { get { return _runningTaskCount > 0; } }
 
@@ -22,6 +40,8 @@ namespace MovieExplorer.ViewModels
             get { return _errorMessage; }
             set { SetProperty(ref _errorMessage, value); }
         }
+
+        public virtual void OnResume() { }
 
         protected async Task ShowLoaderAsync(Func<Task> asyncAction)
         {

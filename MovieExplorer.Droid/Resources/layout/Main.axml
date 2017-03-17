@@ -7,90 +7,76 @@
   <include
       android:id="@+id/toolbar"
       layout="@layout/Toolbar" />
-  <ProgressBar
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:indeterminateOnly="true"
-      android:layout_gravity="center"
-      local:MvxBind="Visible ShowLoader"
-      style="?android:attr/progressBarStyleSmall" />
-  <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      local:MvxBind="Visible InverseShowLoader">
-    <LinearLayout
-        android:orientation="vertical"
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/swipe"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent">
+    <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-      <TextView
-          android:text="Top Rated"
-          android:textColor="@color/section_label_color"
-          android:textStyle="bold"
-          android:textSize="16dp"
-          android:paddingLeft="10dp"
+        android:layout_height="match_parent"
+        local:MvxBind="Visible InverseShowLoader">
+      <LinearLayout
+          android:orientation="vertical"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-      <cheesebaron.horizontallistview.HorizontalListView
-          android:id="@+id/top_rated_list"
-          android:layout_width="fill_parent"
-          android:layout_height="231dp" />
-      <TextView
-          android:text="Popular"
-          android:textColor="@color/section_label_color"
-          android:textStyle="bold"
-          android:textSize="16dp"
-          android:paddingLeft="10dp"
-          android:paddingTop="10dp"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-      <cheesebaron.horizontallistview.HorizontalListView
-          android:id="@+id/popular_list"
-          android:layout_width="fill_parent"
-          android:layout_height="231dp" />
-      <TextView
-          android:text="Now Playing"
-          android:textColor="@color/section_label_color"
-          android:textStyle="bold"
-          android:textSize="16dp"
-          android:paddingLeft="10dp"
-          android:paddingTop="10dp"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-      <cheesebaron.horizontallistview.HorizontalListView
-          android:id="@+id/now_playing_list"
-          android:layout_width="fill_parent"
-          android:layout_height="231dp" />
-
-      <TextView
-          android:text="Favorites"
-          android:textColor="@color/section_label_color"
-          android:textStyle="bold"
-          android:textSize="16dp"
-          android:paddingLeft="10dp"
-          android:paddingTop="10dp"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content" />
-      <!--TODO: Add error labels for the other lists in case one of the service calls fail in the VM-->
-      <TextView
-          android:text="No favorites yet :("
-          android:textColor="@color/text_color"
-          android:paddingLeft="20dp"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          local:MvxBind="Visible InverseHasFavorites" />
-      <cheesebaron.horizontallistview.HorizontalListView
-          android:id="@+id/favorites_list"
-          android:layout_width="fill_parent"
-          android:layout_height="231dp"
-          local:MvxBind="Visible HasFavorites" />
-
-      <Button
+          android:layout_height="match_parent">
+        <TextView
+            android:text="Favorites"
+            android:textColor="@color/section_label_color"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Reload"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            local:MvxBind="Click ReloadCommand" />
-    </LinearLayout>
-  </ScrollView>
+            local:MvxBind="Visible HasFavorites" />
+        <cheesebaron.horizontallistview.HorizontalListView
+            android:id="@+id/favorites_list"
+            android:layout_width="fill_parent"
+            android:layout_height="231dp"
+            local:MvxBind="Visible HasFavorites" />
+        
+        <TextView
+            android:text="Top Rated"
+            android:textColor="@color/section_label_color"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <cheesebaron.horizontallistview.HorizontalListView
+            android:id="@+id/top_rated_list"
+            android:layout_width="fill_parent"
+            android:layout_height="231dp" />
+        <TextView
+            android:text="Popular"
+            android:textColor="@color/section_label_color"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <cheesebaron.horizontallistview.HorizontalListView
+            android:id="@+id/popular_list"
+            android:layout_width="fill_parent"
+            android:layout_height="231dp" />
+        <TextView
+            android:text="Now Playing"
+            android:textColor="@color/section_label_color"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!--TODO: Add error messages and hide the listviews if they have no content.-->
+        <cheesebaron.horizontallistview.HorizontalListView
+            android:id="@+id/now_playing_list"
+            android:layout_width="fill_parent"
+            android:layout_height="231dp" />
+      </LinearLayout>
+    </ScrollView>
+  </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

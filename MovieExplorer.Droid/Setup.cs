@@ -27,7 +27,7 @@ namespace MovieExplorer.Droid
             // PCL Services
             Mvx.RegisterSingleton<IEndpointList>(new EndpointList());
             Mvx.LazyConstructAndRegisterSingleton<IMovieService>(() => new MovieService(Mvx.Resolve<IEndpointList>()));
-            Mvx.LazyConstructAndRegisterSingleton<IWatchlistService>(() => new WatchlistService(Mvx.Resolve<IFileService>()));
+            Mvx.LazyConstructAndRegisterSingleton<IFavoritesService>(() => new FavoritesService(Mvx.Resolve<IFileService>()));
 
             // Native Services
             Mvx.RegisterSingleton<IToastService>(new ToastService());

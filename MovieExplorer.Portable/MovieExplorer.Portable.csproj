@@ -54,12 +54,13 @@
     <Compile Include="Services\IMovieService.cs" />
     <Compile Include="Services\IToastService.cs" />
     <Compile Include="Services\IUriService.cs" />
-    <Compile Include="Services\IWatchlistService.cs" />
+    <Compile Include="Services\IFavoritesService.cs" />
     <Compile Include="Services\MovieService.cs" />
-    <Compile Include="Services\WatchlistService.cs" />
+    <Compile Include="Services\FavoritesService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\DetailViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\VMProperty.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieExplorer.Portable", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieExplorer.Droid", "MovieExplorer.Droid\MovieExplorer.Droid.csproj", "{E9B529C4-6414-413B-8186-21AF94E1E8EF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{09AE536F-CB72-4792-BEEA-C5AB85EE9C7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieExplorer.Portable.Tests", "MovieExplorer.Portable.Tests\MovieExplorer.Portable.Tests.csproj", "{984AFA02-DC3C-4340-A5FC-EC6826935805}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,8 +27,15 @@ Global
 		{E9B529C4-6414-413B-8186-21AF94E1E8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9B529C4-6414-413B-8186-21AF94E1E8EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E9B529C4-6414-413B-8186-21AF94E1E8EF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{984AFA02-DC3C-4340-A5FC-EC6826935805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{984AFA02-DC3C-4340-A5FC-EC6826935805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{984AFA02-DC3C-4340-A5FC-EC6826935805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{984AFA02-DC3C-4340-A5FC-EC6826935805}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{984AFA02-DC3C-4340-A5FC-EC6826935805} = {09AE536F-CB72-4792-BEEA-C5AB85EE9C7B}
 	EndGlobalSection
 EndGlobal

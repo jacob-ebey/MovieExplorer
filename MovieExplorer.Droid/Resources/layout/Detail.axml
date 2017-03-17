@@ -4,133 +4,140 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <include
-      android:id="@+id/toolbar"
-      layout="@layout/Toolbar" />
-  <ProgressBar
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/Toolbar" />
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminateOnly="true"
         android:layout_gravity="center"
         local:MvxBind="Visible ShowLoader"
         style="?android:attr/progressBarStyleSmall" />
-  <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      local:MvxBind="Visible InverseShowLoader">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/detail_poster_image"
-            android:layout_width="154dp"
-            android:layout_height="231dp"
-            android:padding="10dp"
-            android:cropToPadding="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/placeholder" />
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
-          <TextView
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:textColor="@color/text_color"
-              android:textSize="16dp"
-              android:textStyle="bold"
-              local:MvxBind="Text Movie.Title" />
-          <TextView
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:textColor="@color/text_color"
-              local:MvxBind="Text Movie.ReleaseDate, Converter=StringDateConverter, ConverterParameter='Release Data: {0}'" />
-
-          <RatingBar
-              android:id="@+id/rating_bar"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:transformPivotX="0dp"
-              style="?android:attr/ratingBarStyleSmall"
-              android:scaleX="1.5"
-              android:scaleY="1.5"
-              android:numStars="5"
-              android:stepSize="0.1"
-              android:isIndicator="true"
-              local:MvxBind="Rating Movie.VoteAverageClamped" />
-          
-          <TextView
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:textColor="@color/text_color"
-              android:layout_marginTop="5dp"
-              local:MvxBind="Text Movie.VoteCount, Converter=FormatConverter, ConverterParameter='(from {0} votes)'" />
-
-          <LinearLayout
-              android:layout_width="fill_parent"
-              android:layout_height="0dip"
-              android:orientation="vertical"
-              android:layout_weight="1"
-              android:gravity="bottom">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:singleLine="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_gravity="bottom"
-                android:text="Play Video"
-                android:textColor="#ffffff"
-                android:background="#a3ca19"
-                local:MvxBind="Click PlayVideoCommand" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:singleLine="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_gravity="bottom"
-                android:textColor="#ffffff"
-                android:background="#dbb001"
-                android:layout_marginTop="10dp"
-                local:MvxBind="Click AddToWatchlistCommand; Text WatchlistButtonText" />
-          </LinearLayout>
-        </LinearLayout>
-      </LinearLayout>
-      <TextView
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:textColor="@color/text_color"
-          android:padding="10dp"
-          local:MvxBind="Text Movie.Overview" />
-      <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="0dip"
-          android:orientation="vertical"
-          android:layout_weight="1"
-          android:paddingBottom="10dp"
-          android:gravity="bottom">
-        <TextView
-            android:text="Similar Movies"
-            android:textColor="@color/section_label_color"
-            android:textStyle="bold"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:layout_gravity="bottom"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        local:MvxBind="Visible InverseShowLoader">
+        <ScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <cheesebaron.horizontallistview.HorizontalListView
-            android:id="@+id/similar_list"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/similar">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/detail_poster_image"
+                        android:layout_width="154dp"
+                        android:layout_height="231dp"
+                        android:padding="10dp"
+                        android:cropToPadding="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/placeholder" />
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            local:MvxBind="Text Movie.Title" />
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            local:MvxBind="Text Movie.ReleaseDate, Converter=StringDateConverter, ConverterParameter='Release Data: {0}'" />
+                        <RatingBar
+                            android:id="@+id/rating_bar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:transformPivotX="0dp"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:scaleX="1.5"
+                            android:scaleY="1.5"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            android:isIndicator="true"
+                            local:MvxBind="Rating Movie.VoteAverageClamped" />
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:layout_marginTop="5dp"
+                            local:MvxBind="Text Movie.VoteCount, Converter=FormatConverter, ConverterParameter='(from {0} votes)'" />
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dip"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="bottom">
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:singleLine="true"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:layout_gravity="bottom"
+                                android:text="Play Video"
+                                android:textColor="#ffffff"
+                                android:background="#a3ca19"
+                                local:MvxBind="Click PlayVideoCommand" />
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:singleLine="true"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:layout_gravity="bottom"
+                                android:textColor="#ffffff"
+                                android:background="#dbb001"
+                                android:layout_marginTop="10dp"
+                                local:MvxBind="Click AddToWatchlistCommand; Text WatchlistButtonText" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color"
+                    android:padding="10dp"
+                    local:MvxBind="Text Movie.Overview" />
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+            android:id="@+id/similar"
             android:layout_width="fill_parent"
-            android:layout_height="138dp"
-            android:layout_gravity="bottom" />
-      </LinearLayout>
-    </LinearLayout>
-  </ScrollView>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:layout_alignParentBottom="true">
+            <TextView
+                android:text="Similar Movies"
+                android:textColor="@color/section_label_color"
+                android:textStyle="bold"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                local:MvxBind="Visible HasSimilar"/>
+            <cheesebaron.horizontallistview.HorizontalListView
+                android:id="@+id/similar_list"
+                android:layout_width="fill_parent"
+                android:layout_height="138dp"
+                android:layout_gravity="bottom"
+                local:MvxBind="Visible HasSimilar" />
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

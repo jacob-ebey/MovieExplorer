@@ -37,6 +37,13 @@ namespace MovieExplorer.Droid
             text.Hint = "" + text.Hint;
         }
 
+        public void Include(EditText text)
+        {
+            text.AfterTextChanged += (sender, args) => text.Text = "" + text.Text;
+            text.Hint = "" + text.Hint;
+            text.Click += (s, e) => text.Text = text.Text + "";
+        }
+
         public void Include(CheckedTextView text)
         {
             text.TextChanged += (sender, args) => text.Text = "" + text.Text;

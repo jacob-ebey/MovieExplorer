@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace MovieExplorer.Services
 {
-    public interface IWatchlistService
+    public interface IFavoritesService
     {
         ObservableCollection<MovieListResult> Favorites { get; }
 

@@ -7,12 +7,12 @@ using Newtonsoft.Json;
 
 namespace MovieExplorer.Services
 {
-    public class WatchlistService : IWatchlistService
+    public class FavoritesService : IFavoritesService
     {
         private const string WatchlistFile = "watchlist.json";
         private IFileService _fileService;
 
-        public WatchlistService(IFileService fileService)
+        public FavoritesService(IFileService fileService)
         {
             _fileService = fileService;
         }
