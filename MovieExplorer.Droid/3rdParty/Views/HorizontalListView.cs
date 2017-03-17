@@ -35,6 +35,11 @@ using Android.Views;
 using Android.Widget;
 using Android.Content;
 
+// TODO: Syncronize this view. This is not anywhere near thread safe... 
+// If you wiggle a list back and forth on the detail page then simultaniouslly
+// hit the exit icon on the toolbar this view attempts to use disposed resources
+// and crashes hard. P.S: This is 3rd party code.
+
 namespace Cheesebaron.HorizontalListView
 {
     [Preserve]
