@@ -39,6 +39,13 @@ namespace MovieExplorer.Droid
             Mvx.RegisterSingleton<ILogger>(new Logger());
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Mvx.Resolve<ILogger>().Init();
+        }
+
         protected override void FillValueConverters(IMvxValueConverterRegistry registry)
         {
             base.FillValueConverters(registry);

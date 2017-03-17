@@ -53,10 +53,7 @@ namespace MovieExplorer.Droid.Activities
                             image.SetImageDrawable(bitmap);
                         });
                     }
-                    catch (Exception e)
-                    {
-                        Mvx.Resolve<ILogger>().LogException(e);
-                    }
+                    catch { } // Don't care about this one. 
                 });
             }
         }

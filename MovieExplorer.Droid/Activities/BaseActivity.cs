@@ -11,14 +11,6 @@ namespace MovieExplorer.Droid.Activities
 {
     public class BaseActivity<TViewModel> : MvxActivity<TViewModel> where TViewModel : BaseViewModel, IMvxViewModel
     {
-        protected override void OnCreate(Bundle bundle)
-        {
-            base.OnCreate(bundle);
-
-            MobileCenter.Start("e709b5ec-fb3b-434c-a1c9-2e7e18decca1",
-                   typeof(Analytics), typeof(Crashes));
-        }
-
         protected override void OnResume()
         {
             base.OnResume();
