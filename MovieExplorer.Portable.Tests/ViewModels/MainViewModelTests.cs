@@ -84,7 +84,7 @@ namespace MovieExplorer.Portable.Tests.ViewModels
             watchlistMock.SetupGet(m => m.Favorites).Returns(watchlist);
 
             //Act
-            MainViewModel vm = new MainViewModel(movieMock.Object, watchlistMock.Object);
+            MainViewModel vm = new MainViewModel(movieMock.Object, watchlistMock.Object, null);
             await vm.OnNavigatedToAsync();
             
             // Assert

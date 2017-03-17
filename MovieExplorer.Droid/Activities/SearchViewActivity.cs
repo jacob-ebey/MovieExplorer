@@ -10,8 +10,6 @@ namespace MovieExplorer.Droid.Activities
     [Activity(Label = "Movie Explorer", Icon = "@drawable/icon", Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden)]
     public class SearchViewActivity : BaseActivity<SearchViewModel>
     {
-        
-
         protected override void OnViewModelSet()
         {
             base.OnViewModelSet();

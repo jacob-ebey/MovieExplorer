@@ -21,13 +21,15 @@ namespace MovieExplorer.Services
         private readonly Dictionary<string, Mutex> _posterMutexCache = new Dictionary<string, Mutex>();
         private object _posterSyncRoot = new object();
 
-        private IEndpointList _endpoints;
         private HttpClient _client;
+        private IEndpointList _endpoints;
+        private ILogger _logger;
 
-        public MovieService(IEndpointList endpoints)
+        public MovieService(HttpClient client, IEndpointList endpoints, ILogger logger)
         {
+            _client = client;
             _endpoints = endpoints;
-            _client = new HttpClient(new NativeMessageHandler());
+            _logger = logger;
         }
 
         public Task<ServiceResult<ResultsModel<MovieListResult>>> GetNowPlayingAsync()
@@ -74,6 +76,7 @@ namespace MovieExplorer.Services
             }
             catch (Exception e)
             {
+                _logger.LogException(e);
                 result.InnerException = e;
                 result.Succeeded = false;
             }
@@ -125,7 +128,7 @@ namespace MovieExplorer.Services
             }
             catch (Exception e)
             {
-                // TODO: Log exception
+                _logger.LogException(e);
             }
 
             // Copy the result to a new stream so android doesn't loose it's shit
@@ -145,7 +148,7 @@ namespace MovieExplorer.Services
                     }
                     catch (Exception e)
                     {
-                        // TODO: Log exception
+                        _logger.LogException(e);
                     }
                 }
             }

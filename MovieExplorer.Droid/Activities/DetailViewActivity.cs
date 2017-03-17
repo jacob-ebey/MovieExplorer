@@ -29,14 +29,18 @@ namespace MovieExplorer.Droid.Activities
 
             if (ViewModel?.Movie != null)
             {
+                // Fetch the move service to fetch the image stream. We use this so
+                // we can retrieve cached versions if they already have been loaded.
                 var movieService = Mvx.Resolve<IMovieService>();
 
+                // Setup the similar list
                 var similarList = FindViewById<HorizontalListView>(Resource.Id.similar_list);
                 similarList.Adapter = new MovieAdapter(this, ViewModel.Similar, Resource.Layout.SmallMovieView, "w92")
                 {
                     ClickedCommand = ViewModel.MovieSelectedCommand
                 };
 
+                // Kick off a task to fetch the poster image
                 Task.Run(async () =>
                 {
                     try
@@ -51,7 +55,7 @@ namespace MovieExplorer.Droid.Activities
                     }
                     catch (Exception e)
                     {
-                        // TODO: Log exception
+                        Mvx.Resolve<ILogger>().LogException(e);
                     }
                 });
             }

@@ -1,9 +1,7 @@
-﻿using MovieExplorer.Exceptions;
-using MovieExplorer.Models;
+﻿using MovieExplorer.Models;
 using MovieExplorer.Services;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform.Core;
-using System.Collections.Generic;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +15,7 @@ namespace MovieExplorer.ViewModels
 
         private IMovieService _movieService;
         private IFavoritesService _watchlistService;
+        private ILogger _logger;
 
         private bool _isLoading = false;
         private bool _reloadWatchlist = true;
@@ -24,10 +23,11 @@ namespace MovieExplorer.ViewModels
         // Backing fields
         private string _topRatedErrorMessage, _popularErrorMessage, _nowPlayingErrorMessage;
 
-        public MainViewModel(IMovieService movieService, IFavoritesService watchlistService)
+        public MainViewModel(IMovieService movieService, IFavoritesService watchlistService, ILogger logger)
         {
             _movieService = movieService;
             _watchlistService = watchlistService;
+            _logger = logger;
             
             _watchlistService.Modified += (s, e) => _reloadWatchlist = true;
 
@@ -140,11 +140,12 @@ namespace MovieExplorer.ViewModels
             }
         }
 
-        private Task LoadAllCategoriesAsync()
+        private async Task LoadAllCategoriesAsync()
         {
             // Return if we are already loading
-            if (_isLoading) return Task.FromResult(false);
+            if (_isLoading) return;
             _isLoading = true;
+
             try
             {
                 // Clear messages
@@ -157,7 +158,7 @@ namespace MovieExplorer.ViewModels
                 Popular.Clear();
                 NowPlaying.Clear();
 
-                return ShowLoaderAsync(async () =>
+                await ShowLoaderAsync(async () =>
                 {
                     // Kick off all tasks async
                     var topRatedTask = _movieService.GetTopRatedAsync();
@@ -209,13 +210,11 @@ namespace MovieExplorer.ViewModels
                     {
                         NowPlayingErrorMessage = string.Format(_errorMessageTemplate, "now playing");
                     }
-
-                    // If there was no data for any category show a generic error message because something went seriouslly wrong...
-                    if (TopRatedErrorMessage != null && PopularErrorMessage != null && NowPlayingErrorMessage != null)
-                    {
-                        throw new MessageException();
-                    }
                 });
+            }
+            catch (Exception e)
+            {
+                _logger.LogException(e);
             }
             finally
             {

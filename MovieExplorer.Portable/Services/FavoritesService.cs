@@ -10,11 +10,14 @@ namespace MovieExplorer.Services
     public class FavoritesService : IFavoritesService
     {
         private const string WatchlistFile = "watchlist.json";
-        private IFileService _fileService;
 
-        public FavoritesService(IFileService fileService)
+        private IFileService _fileService;
+        private ILogger _logger;
+
+        public FavoritesService(IFileService fileService, ILogger logger)
         {
             _fileService = fileService;
+            _logger = logger;
         }
 
         public ObservableCollection<MovieListResult> Favorites { get; } = new ObservableCollection<MovieListResult>();
@@ -54,7 +57,7 @@ namespace MovieExplorer.Services
                 }
                 catch (Exception e)
                 {
-                    // TODO: Log exception
+                    _logger.LogException(e);
                 }
             }
         }
@@ -72,7 +75,14 @@ namespace MovieExplorer.Services
 
         private void Save()
         {
-            _fileService.SaveText(WatchlistFile, JsonConvert.SerializeObject(Favorites));
+            try
+            {
+                _fileService.SaveText(WatchlistFile, JsonConvert.SerializeObject(Favorites));
+            }
+            catch (Exception e)
+            {
+                _logger.LogException(e);
+            }
         }
 
         protected virtual void OnModified() => Modified?.Invoke(this, new EventArgs());

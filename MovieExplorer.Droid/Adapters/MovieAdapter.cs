@@ -43,7 +43,7 @@ namespace MovieExplorer.Droid.Adapters
             : base(context, resource, items)
         {
             _imageSize = imageSize;
-            _client = new HttpClient(new NativeMessageHandler());
+            _client = Mvx.Resolve<HttpClient>();
             _movieService = Mvx.Resolve<IMovieService>();
         }
 
@@ -133,35 +133,38 @@ namespace MovieExplorer.Droid.Adapters
             Task.Run(async () =>
             {
                 bool setDefault = false;
-                try
+                if (!(setDefault = string.IsNullOrWhiteSpace(item.PosterPath)))
                 {
-                    Drawable bitmap = null;
-                    Stream stream = await _movieService.GetMoviePosterAsync(item.PosterPath, _imageSize);
-                    if (stream != null)
+                    try
                     {
-                        using (stream)
+                        Drawable bitmap = null;
+                        Stream stream = await _movieService.GetMoviePosterAsync(item.PosterPath, _imageSize);
+                        if (stream != null)
                         {
-                            bitmap = await Drawable.CreateFromStreamAsync(stream, null);
-                        }
-
-                        Context.RunOnUiThread(() =>
-                        {
-                            // If the view has not been recycled, set the image.
-                            if (!token.IsCancellationRequested)
+                            using (stream)
                             {
-                                image.SetImageDrawable(bitmap);
+                                bitmap = await Drawable.CreateFromStreamAsync(stream, null);
                             }
-                        });
+
+                            Context.RunOnUiThread(() =>
+                            {
+                                // If the view has not been recycled, set the image.
+                                if (!token.IsCancellationRequested)
+                                {
+                                    image.SetImageDrawable(bitmap);
+                                }
+                            });
+                        }
+                        else
+                        {
+                            setDefault = true;
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
+                        Mvx.Resolve<ILogger>().LogException(e);
                         setDefault = true;
                     }
-                }
-                catch (Exception e)
-                {
-                    // TODO: Log exception.
-                    setDefault = true;
                 }
 
                 if (setDefault)

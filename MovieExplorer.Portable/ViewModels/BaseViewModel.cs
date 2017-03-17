@@ -1,8 +1,8 @@
-﻿using MovieExplorer.Exceptions;
-using MovieExplorer.Models;
+﻿using MovieExplorer.Models;
+using MovieExplorer.Services;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -43,7 +43,7 @@ namespace MovieExplorer.ViewModels
 
         public virtual void OnResume() { }
 
-        protected async Task ShowLoaderAsync(Func<Task> asyncAction)
+        protected async Task ShowLoaderAsync(Func<Task> asyncAction, [CallerMemberName] string callerMemberName = null)
         {
             _runningTaskCount++;
             RaisePropertyChanged(nameof(ShowLoader));
@@ -52,14 +52,9 @@ namespace MovieExplorer.ViewModels
             {
                 await asyncAction();
             }
-            catch (MessageException e)
-            {
-                ErrorMessage = e.UserMessage;
-                LogException(e);
-            }
             catch (Exception e)
             {
-                LogException(e);
+                LogException(e, callerMemberName);
             }
             finally
             {
@@ -69,9 +64,9 @@ namespace MovieExplorer.ViewModels
             }
         }
 
-        protected void LogException(Exception e)
+        protected void LogException(Exception e, [CallerMemberName] string callerMemberName = null)
         {
-            // TODO: Log exceptions.
+            Mvx.Resolve<ILogger>().LogException(e, callerMemberName);
         }
     }
 }

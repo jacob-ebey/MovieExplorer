@@ -9,6 +9,8 @@ using System.Reflection;
 using MovieExplorer.Converters;
 using MvvmCross.Platform.Converters;
 using MovieExplorer.Droid.Services;
+using System.Net.Http;
+using ModernHttpClient;
 
 namespace MovieExplorer.Droid
 {
@@ -25,14 +27,16 @@ namespace MovieExplorer.Droid
             MvxSimpleIoCContainer.Initialize();
 
             // PCL Services
+            Mvx.RegisterSingleton(new HttpClient(new NativeMessageHandler()));
             Mvx.RegisterSingleton<IEndpointList>(new EndpointList());
-            Mvx.LazyConstructAndRegisterSingleton<IMovieService>(() => new MovieService(Mvx.Resolve<IEndpointList>()));
-            Mvx.LazyConstructAndRegisterSingleton<IFavoritesService>(() => new FavoritesService(Mvx.Resolve<IFileService>()));
+            Mvx.LazyConstructAndRegisterSingleton<IMovieService>(() => new MovieService(Mvx.Resolve<HttpClient>(), Mvx.Resolve<IEndpointList>(), Mvx.Resolve<ILogger>()));
+            Mvx.LazyConstructAndRegisterSingleton<IFavoritesService>(() => new FavoritesService(Mvx.Resolve<IFileService>(), Mvx.Resolve<ILogger>()));
 
             // Native Services
             Mvx.RegisterSingleton<IToastService>(new ToastService());
             Mvx.RegisterSingleton<IUriService>(new UriService());
             Mvx.RegisterSingleton<IFileService>(new FileService());
+            Mvx.RegisterSingleton<ILogger>(new Logger());
         }
 
         protected override void FillValueConverters(IMvxValueConverterRegistry registry)

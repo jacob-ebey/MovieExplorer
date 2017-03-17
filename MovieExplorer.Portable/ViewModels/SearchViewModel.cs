@@ -74,8 +74,7 @@ namespace MovieExplorer.ViewModels
                     _dispatcher.RequestMainThreadAction(() =>
                     {
                         if (token.IsCancellationRequested) return;
-
-
+                        
                         foreach (var item in searchResult.Data.Results)
                         {
                             SearchResults.Add(item);

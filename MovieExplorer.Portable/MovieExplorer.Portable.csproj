@@ -40,7 +40,6 @@
   <ItemGroup>
     <Compile Include="Converters\FormatConverter.cs" />
     <Compile Include="Converters\StringDateConverter.cs" />
-    <Compile Include="Exceptions\MessageException.cs" />
     <Compile Include="MovieApp.cs" />
     <Compile Include="Models\MovieListResult.cs" />
     <Compile Include="Models\ResultsModel.cs" />
@@ -51,6 +50,7 @@
     <Compile Include="Services\EndpointList.cs" />
     <Compile Include="Services\IEndpointList.cs" />
     <Compile Include="Services\IFileService.cs" />
+    <Compile Include="Services\ILogger.cs" />
     <Compile Include="Services\IMovieService.cs" />
     <Compile Include="Services\IToastService.cs" />
     <Compile Include="Services\IUriService.cs" />
@@ -61,7 +61,6 @@
     <Compile Include="ViewModels\DetailViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
-    <Compile Include="ViewModels\VMProperty.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ModernHttpClient, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
