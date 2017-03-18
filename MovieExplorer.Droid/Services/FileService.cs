@@ -1,3 +1,7 @@
+// <copyright file="FileService.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using System;
 using MovieExplorer.Services;
 using System.IO;

@@ -1,3 +1,7 @@
+// <copyright file="Logger.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using System;
 using MovieExplorer.Services;
 using Microsoft.Azure.Mobile.Analytics;

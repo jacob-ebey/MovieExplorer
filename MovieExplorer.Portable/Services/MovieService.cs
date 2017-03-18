@@ -1,4 +1,7 @@
-using ModernHttpClient;
+// <copyright file="MovieService.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using MovieExplorer.Models;
 using Newtonsoft.Json;
 using System;

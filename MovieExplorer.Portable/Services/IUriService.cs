@@ -1,4 +1,6 @@
-﻿using System;
+﻿// <copyright file="IUriService.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
 
 namespace MovieExplorer.Services
 {

@@ -1,3 +1,7 @@
+// <copyright file="VideoResult.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using Newtonsoft.Json;
 
 namespace MovieExplorer.Models

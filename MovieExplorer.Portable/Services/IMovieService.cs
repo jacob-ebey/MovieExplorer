@@ -1,3 +1,7 @@
+// <copyright file="IMovieService.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using MovieExplorer.Models;
 using System.IO;
 using System.Threading.Tasks;

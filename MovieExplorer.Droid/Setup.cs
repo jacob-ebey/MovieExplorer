@@ -1,3 +1,7 @@
+// <copyright file="Setup.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using Android.Content;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Droid.Platform;
@@ -49,8 +53,8 @@ namespace MovieExplorer.Droid
         protected override void FillValueConverters(IMvxValueConverterRegistry registry)
         {
             base.FillValueConverters(registry);
-            registry.AddOrOverwrite("FormatConverter", new FormatConverter());
-            registry.AddOrOverwrite("StringDateConverter", new StringDateConverter());
+            registry.AddOrOverwrite(nameof(FormatConverter), new FormatConverter());
+            registry.AddOrOverwrite(nameof(StringDateConverter), new StringDateConverter());
         }
 
         protected override IMvxApplication CreateApp()

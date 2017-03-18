@@ -1,3 +1,7 @@
+// <copyright file="UriService.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using Android.Content;
 using MovieExplorer.Services;
 using System;

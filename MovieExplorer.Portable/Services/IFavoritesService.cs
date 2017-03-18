@@ -1,4 +1,8 @@
-﻿using MovieExplorer.Models;
+﻿// <copyright file="IFavoritesService.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
+using MovieExplorer.Models;
 using System;
 using System.Collections.ObjectModel;
 

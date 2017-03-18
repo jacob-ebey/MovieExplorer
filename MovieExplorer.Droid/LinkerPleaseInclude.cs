@@ -1,3 +1,7 @@
+// <copyright file="LinkerPleaseInclude.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using Android.App;
 using Android.Views;
 using Android.Widget;
@@ -6,24 +10,11 @@ using System.Windows.Input;
 
 namespace MovieExplorer.Droid
 {
-    // Taken from MvvmCross Git repo: https://raw.githubusercontent.com/MvvmCross/MvvmCross/develop/TestProjects/Android-Support/Fragments/Example.Droid/LinkerPleaseInclude.cs
-    // This class is never actually executed, but when Xamarin linking is enabled it does how to ensure types and properties
-    // are preserved in the deployed app
     public class LinkerPleaseInclude
     {
         public void Include(Button button)
         {
             button.Click += (s, e) => button.Text = button.Text + "";
-        }
-
-        public void Include(CheckBox checkBox)
-        {
-            checkBox.CheckedChange += (sender, args) => checkBox.Checked = !checkBox.Checked;
-        }
-
-        public void Include(Switch @switch)
-        {
-            @switch.CheckedChange += (sender, args) => @switch.Checked = !@switch.Checked;
         }
 
         public void Include(View view)
@@ -42,22 +33,6 @@ namespace MovieExplorer.Droid
             text.AfterTextChanged += (sender, args) => text.Text = "" + text.Text;
             text.Hint = "" + text.Hint;
             text.Click += (s, e) => text.Text = text.Text + "";
-        }
-
-        public void Include(CheckedTextView text)
-        {
-            text.TextChanged += (sender, args) => text.Text = "" + text.Text;
-            text.Hint = "" + text.Hint;
-        }
-
-        public void Include(CompoundButton cb)
-        {
-            cb.CheckedChange += (sender, args) => cb.Checked = !cb.Checked;
-        }
-
-        public void Include(SeekBar sb)
-        {
-            sb.ProgressChanged += (sender, args) => sb.Progress = sb.Progress + 1;
         }
 
         public void Include(RatingBar rb)

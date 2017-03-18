@@ -1,4 +1,8 @@
-﻿using Android.App;
+﻿// <copyright file="SearchViewActivity.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
+using Android.App;
 using Android.Content.PM;
 using Android.Widget;
 using MovieExplorer.Droid.Adapters;

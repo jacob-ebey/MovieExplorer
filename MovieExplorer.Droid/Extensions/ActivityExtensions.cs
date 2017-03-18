@@ -1,3 +1,7 @@
+// <copyright file="ActivityExtensions.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using Android.App;
 using Android.Views;
 using Android.Views.Animations;

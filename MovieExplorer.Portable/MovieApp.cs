@@ -1,7 +1,9 @@
-﻿using MovieExplorer.Services;
+﻿// <copyright file="MovieApp.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using MovieExplorer.ViewModels;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform;
 
 namespace MovieExplorer
 {

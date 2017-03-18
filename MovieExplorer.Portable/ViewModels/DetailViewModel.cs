@@ -1,11 +1,14 @@
-﻿using MovieExplorer.Models;
+﻿// <copyright file="DetailViewModel.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
+using MovieExplorer.Models;
 using MovieExplorer.Services;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MvvmCross.Core.ViewModels;
 using System.Windows.Input;
-using MvvmCross.Platform.Core;
 
 namespace MovieExplorer.ViewModels
 {
@@ -14,7 +17,7 @@ namespace MovieExplorer.ViewModels
         private const string YoutubeUrl = "https://www.youtube.com/watch?v={0}";
 
         public const string AddToFavoritesLabel = "Add to favorites";
-        public const string RemoveFromFavoritesLabel = "Remove from favorites";
+        public const string RemoveFromFavoritesLabel = "Unfavorite";
 
         private IMovieService _movieService;
         private IFavoritesService _favoritesService;

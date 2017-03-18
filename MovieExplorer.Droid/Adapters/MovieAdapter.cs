@@ -1,3 +1,7 @@
+// <copyright file="MovieAdapter.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using Android.App;
 using Android.Views;
 using MovieExplorer.Views;

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="IEndpointList.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
+using System;
 
 namespace MovieExplorer.Services
 {

@@ -1,4 +1,8 @@
-﻿using MvvmCross.Platform.Converters;
+﻿// <copyright file="FormatConverter.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
+using MvvmCross.Platform.Converters;
 using System;
 using System.Globalization;
 

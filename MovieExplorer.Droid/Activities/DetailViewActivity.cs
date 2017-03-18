@@ -1,3 +1,7 @@
+// <copyright file="DetailViewActivity.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using Android.App;
 using MovieExplorer.ViewModels;
 using MvvmCross.Droid.Views;

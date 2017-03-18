@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="ILogger.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
+using System;
 using System.Runtime.CompilerServices;
 
 namespace MovieExplorer.Services

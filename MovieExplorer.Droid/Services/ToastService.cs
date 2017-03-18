@@ -1,3 +1,7 @@
+// <copyright file="ToastService.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using Android.Widget;
 using MovieExplorer.Services;
 

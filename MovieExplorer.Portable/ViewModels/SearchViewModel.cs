@@ -1,7 +1,10 @@
-﻿using MovieExplorer.Models;
+﻿// <copyright file="SearchViewModel.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
+using MovieExplorer.Models;
 using MovieExplorer.Services;
 using MvvmCross.Platform.Core;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;

@@ -1,4 +1,8 @@
-﻿using Android.App;
+﻿// <copyright file="MainViewActivity.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Support.V4.Widget;
@@ -47,7 +51,6 @@ namespace MovieExplorer.Droid.Activities
             var topRatedList = FindViewById<HorizontalListView>(Resource.Id.top_rated_list);
             topRatedList.Adapter = new MovieAdapter(this, ViewModel.TopRated) { ClickedCommand = ViewModel.MovieSelectedCommand };
             
-
             var popularList = FindViewById<HorizontalListView>(Resource.Id.popular_list);
             popularList.Adapter = new MovieAdapter(this, ViewModel.Popular) { ClickedCommand = ViewModel.MovieSelectedCommand };
 

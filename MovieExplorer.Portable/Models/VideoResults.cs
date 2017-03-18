@@ -1,3 +1,7 @@
+// <copyright file="VideoResults.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using Newtonsoft.Json;
 using System.Collections.Generic;
 

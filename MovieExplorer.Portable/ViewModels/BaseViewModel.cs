@@ -1,4 +1,8 @@
-﻿using MovieExplorer.Models;
+﻿// <copyright file="BaseViewModel.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
+using MovieExplorer.Models;
 using MovieExplorer.Services;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;

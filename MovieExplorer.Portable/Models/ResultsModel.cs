@@ -1,6 +1,9 @@
+// <copyright file="ResultsModel.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System;
 
 namespace MovieExplorer.Models
 {

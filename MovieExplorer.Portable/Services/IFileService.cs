@@ -1,4 +1,8 @@
-﻿namespace MovieExplorer.Services
+﻿// <copyright file="IFileService.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
+namespace MovieExplorer.Services
 {
     public interface IFileService
     {

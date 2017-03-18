@@ -1,3 +1,7 @@
+// <copyright file="EndpointList.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
+
 using System;
 using System.Net;
 

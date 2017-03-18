@@ -1,3 +1,6 @@
+// <copyright file="ActivityTracker.cs">
+//     Copyright (c) 2017 Jacob Ebey
+// </copyright>
 
 using Android.App;
 
