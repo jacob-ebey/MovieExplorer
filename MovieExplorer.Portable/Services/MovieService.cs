@@ -21,7 +21,6 @@ namespace MovieExplorer.Services
         private const string ImageUrl = "http://image.tmdb.org/t/p/{1}{0}";
 
         private readonly Dictionary<string, Task<Stream>> _posterCache = new Dictionary<string, Task<Stream>>();
-        private readonly Dictionary<string, Mutex> _posterMutexCache = new Dictionary<string, Mutex>();
         private object _posterSyncRoot = new object();
 
         private HttpClient _client;
