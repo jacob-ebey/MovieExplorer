@@ -13,7 +13,7 @@ namespace MovieExplorer.Services
 {
     public class FavoritesService : IFavoritesService
     {
-        private const string WatchlistFile = "watchlist.json";
+        private const string FavoritesFile = "favorites.json";
 
         private IFileService _fileService;
         private ILogger _logger;
@@ -42,7 +42,7 @@ namespace MovieExplorer.Services
         {
             Favorites.Clear();
 
-            var json = _fileService.LoadText(WatchlistFile);
+            var json = _fileService.LoadText(FavoritesFile);
 
             if (json != null)
             {
@@ -55,8 +55,8 @@ namespace MovieExplorer.Services
                         foreach (var item in loadedList)
                         {
                             Favorites.Add(item);
-                            OnModified();
                         }
+                        OnModified();
                     }
                 }
                 catch (Exception e)
@@ -81,7 +81,7 @@ namespace MovieExplorer.Services
         {
             try
             {
-                _fileService.SaveText(WatchlistFile, JsonConvert.SerializeObject(Favorites));
+                _fileService.SaveText(FavoritesFile, JsonConvert.SerializeObject(Favorites));
             }
             catch (Exception e)
             {

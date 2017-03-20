@@ -46,7 +46,7 @@ namespace MovieExplorer.Droid.UITests
         }
 
         [Test]
-        public void CanAddToWatchlist()
+        public void CanAddToFavorites()
         {
             CanShowDetail();
 

@@ -41,7 +41,7 @@ namespace MovieExplorer.Droid.Activities
                 var similarList = FindViewById<HorizontalListView>(Resource.Id.similar_list);
                 similarList.Adapter = new MovieAdapter(this, ViewModel.Similar, Resource.Layout.SmallMovieView, "w92")
                 {
-                    ClickedCommand = ViewModel.MovieSelectedCommand
+                    ClickedCommand = ViewModel.NavigateToMovieDetailCommand
                 };
 
                 // Kick off a task to fetch the poster image

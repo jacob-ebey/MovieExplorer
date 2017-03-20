@@ -49,16 +49,16 @@ namespace MovieExplorer.Droid.Activities
             };
 
             var topRatedList = FindViewById<HorizontalListView>(Resource.Id.top_rated_list);
-            topRatedList.Adapter = new MovieAdapter(this, ViewModel.TopRated) { ClickedCommand = ViewModel.MovieSelectedCommand };
+            topRatedList.Adapter = new MovieAdapter(this, ViewModel.TopRated) { ClickedCommand = ViewModel.NavigateToMovieDetailCommand };
             
             var popularList = FindViewById<HorizontalListView>(Resource.Id.popular_list);
-            popularList.Adapter = new MovieAdapter(this, ViewModel.Popular) { ClickedCommand = ViewModel.MovieSelectedCommand };
+            popularList.Adapter = new MovieAdapter(this, ViewModel.Popular) { ClickedCommand = ViewModel.NavigateToMovieDetailCommand };
 
             var nowPlayingList = FindViewById<HorizontalListView>(Resource.Id.now_playing_list);
-            nowPlayingList.Adapter = new MovieAdapter(this, ViewModel.NowPlaying) { ClickedCommand = ViewModel.MovieSelectedCommand };
+            nowPlayingList.Adapter = new MovieAdapter(this, ViewModel.NowPlaying) { ClickedCommand = ViewModel.NavigateToMovieDetailCommand };
 
             var favoritesList = FindViewById<HorizontalListView>(Resource.Id.favorites_list);
-            favoritesList.Adapter = new MovieAdapter(this, ViewModel.Favorites) { ClickedCommand = ViewModel.MovieSelectedCommand };
+            favoritesList.Adapter = new MovieAdapter(this, ViewModel.Favorites) { ClickedCommand = ViewModel.NavigateToMovieDetailCommand };
 
             await ViewModel.OnNavigatedToAsync();
         }

@@ -21,7 +21,7 @@ namespace MovieExplorer.Droid.Activities
             this.SetupToolbar(true);
 
             var grid = FindViewById<GridView>(Resource.Id.results_grid);
-            grid.Adapter = new MovieAdapter(this, ViewModel.SearchResults) { ClickedCommand = ViewModel.MovieSelectedCommand };
+            grid.Adapter = new MovieAdapter(this, ViewModel.SearchResults) { ClickedCommand = ViewModel.NavigateToMovieDetailCommand };
         }
     }
 }

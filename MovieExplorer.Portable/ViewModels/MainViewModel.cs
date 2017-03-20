@@ -18,22 +18,21 @@ namespace MovieExplorer.ViewModels
         private const string _errorMessageTemplate = "No {0} results found... Try reloading...";
 
         private IMovieService _movieService;
-        private IFavoritesService _watchlistService;
+        private IFavoritesService _favoritesService;
         private ILogger _logger;
-
-        private bool _isLoading = false;
-        private bool _reloadWatchlist = true;
+        
+        private bool _reloadFavorites = true;
 
         // Backing fields
         private string _topRatedErrorMessage, _popularErrorMessage, _nowPlayingErrorMessage;
 
-        public MainViewModel(IMovieService movieService, IFavoritesService watchlistService, ILogger logger)
+        public MainViewModel(IMovieService movieService, IFavoritesService favoritesService, ILogger logger)
         {
             _movieService = movieService;
-            _watchlistService = watchlistService;
+            _favoritesService = favoritesService;
             _logger = logger;
             
-            _watchlistService.Modified += (s, e) => _reloadWatchlist = true;
+            _favoritesService.Modified += (s, e) => _reloadFavorites = true;
 
             SearchCommand = new MvxCommand(() => ShowViewModel<SearchViewModel>());
 
@@ -112,7 +111,7 @@ namespace MovieExplorer.ViewModels
 
         public override void OnResume()
         {
-            ReloadWatchlist();
+            ReloadFavorites();
         }
 
         /// <summary>
@@ -121,18 +120,18 @@ namespace MovieExplorer.ViewModels
         /// <returns></returns>
         public Task OnNavigatedToAsync()
         {
-            _watchlistService.Load();
+            _favoritesService.Load();
 
             return LoadAllCategoriesAsync();
         }
 
-        private void ReloadWatchlist()
+        private void ReloadFavorites()
         {
-            if (_reloadWatchlist)
+            if (_reloadFavorites)
             {
                 Favorites.Clear();
                 // Show the newest first
-                foreach (var item in _watchlistService.Favorites.Reverse())
+                foreach (var item in _favoritesService.Favorites.Reverse())
                 {
                     Favorites.Add(item);
                 }
@@ -140,15 +139,14 @@ namespace MovieExplorer.ViewModels
                 RaisePropertyChanged(nameof(HasFavorites));
                 RaisePropertyChanged(nameof(InverseHasFavorites));
 
-                _reloadWatchlist = false;
+                _reloadFavorites = false;
             }
         }
 
         private async Task LoadAllCategoriesAsync()
         {
             // Return if we are already loading
-            if (_isLoading) return;
-            _isLoading = true;
+            if (ShowLoader) return;
 
             try
             {
@@ -169,60 +167,70 @@ namespace MovieExplorer.ViewModels
                     var popularTask = _movieService.GetPopularAsync();
                     var nowPlayingTask = _movieService.GetNowPlayingAsync();
 
-                    ReloadWatchlist();
+                    ReloadFavorites();
 
                     // Await for all results
                     var topRatedResult = await topRatedTask;
                     var popularResult = await popularTask;
                     var nowPlayingResult = await nowPlayingTask;
 
-                    // Check top rated for data
-                    if (topRatedResult.Succeeded && (topRatedResult.Data?.Results?.Any() ?? false))
-                    {
-                        foreach (var item in topRatedResult.Data.Results)
-                        {
-                            TopRated.Add(item);
-                        }
-                    }
-                    else
-                    {
-                        TopRatedErrorMessage = string.Format(_errorMessageTemplate, "top rated");
-                    }
 
-                    // Check popular for data
-                    if (popularResult.Succeeded && (popularResult.Data?.Results?.Any() ?? false))
-                    {
-                        foreach (var item in popularResult.Data.Results)
-                        {
-                            Popular.Add(item);
-                        }
-                    }
-                    else
-                    {
-                        PopularErrorMessage = string.Format(_errorMessageTemplate, "popular");
-                    }
-
-                    // Check now playing for data
-                    if (nowPlayingResult.Succeeded && (nowPlayingResult.Data?.Results?.Any() ?? false))
-                    {
-                        foreach (var item in nowPlayingResult.Data.Results)
-                        {
-                            NowPlaying.Add(item);
-                        }
-                    }
-                    else
-                    {
-                        NowPlayingErrorMessage = string.Format(_errorMessageTemplate, "now playing");
-                    }
+                    PrepTopRatedResult(topRatedResult);
+                    PrepPopularResult(popularResult);
+                    PrepNowPlayingResult(nowPlayingResult);
                 });
             }
             catch (Exception e)
             {
                 _logger.LogException(e);
             }
-            finally
+        }
+
+        private void PrepTopRatedResult(ServiceResult<ResultsModel<MovieListResult>> topRatedResult)
+        {
+            // Check top rated for data
+            if (topRatedResult.Succeeded && (topRatedResult.Data?.Results?.Any() ?? false))
             {
-                _isLoading = false;
+                foreach (var item in topRatedResult.Data.Results)
+                {
+                    TopRated.Add(item);
+                }
+            }
+            else
+            {
+                TopRatedErrorMessage = string.Format(_errorMessageTemplate, "top rated");
+            }
+        }
+
+        private void PrepPopularResult(ServiceResult<ResultsModel<MovieListResult>> popularResult)
+        {
+            // Check popular for data
+            if (popularResult.Succeeded && (popularResult.Data?.Results?.Any() ?? false))
+            {
+                foreach (var item in popularResult.Data.Results)
+                {
+                    Popular.Add(item);
+                }
+            }
+            else
+            {
+                PopularErrorMessage = string.Format(_errorMessageTemplate, "popular");
+            }
+        }
+
+        private void PrepNowPlayingResult(ServiceResult<ResultsModel<MovieListResult>> nowPlayingResult)
+        {
+            // Check now playing for data
+            if (nowPlayingResult.Succeeded && (nowPlayingResult.Data?.Results?.Any() ?? false))
+            {
+                foreach (var item in nowPlayingResult.Data.Results)
+                {
+                    NowPlaying.Add(item);
+                }
+            }
+            else
+            {
+                NowPlayingErrorMessage = string.Format(_errorMessageTemplate, "now playing");
             }
         }
     }

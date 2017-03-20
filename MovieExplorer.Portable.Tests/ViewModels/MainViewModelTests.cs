@@ -79,12 +79,12 @@ namespace MovieExplorer.Portable.Tests.ViewModels
                 .ReturnsAsync(() => NowPlayingResult)
                 .Verifiable("Did not try to retrieve the now playing movies.");
 
-            Mock<IFavoritesService> watchlistMock = new Mock<IFavoritesService>();
-            ObservableCollection<MovieListResult> watchlist = new ObservableCollection<MovieListResult>(FavoriteItems);
-            watchlistMock.SetupGet(m => m.Favorites).Returns(watchlist);
+            Mock<IFavoritesService> favoritesMock = new Mock<IFavoritesService>();
+            ObservableCollection<MovieListResult> favorites = new ObservableCollection<MovieListResult>(FavoriteItems);
+            favoritesMock.SetupGet(m => m.Favorites).Returns(favorites);
 
             //Act
-            MainViewModel vm = new MainViewModel(movieMock.Object, watchlistMock.Object, null);
+            MainViewModel vm = new MainViewModel(movieMock.Object, favoritesMock.Object, null);
             await vm.OnNavigatedToAsync();
             
             // Assert

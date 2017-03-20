@@ -20,7 +20,7 @@ namespace MovieExplorer.ViewModels
 
         protected BaseViewModel()
         {
-            MovieSelectedCommand = new MvxCommand<MovieListResult>(r =>
+            NavigateToMovieDetailCommand = new MvxCommand<MovieListResult>(r =>
             {
                 if (r != null)
                 {
@@ -32,7 +32,7 @@ namespace MovieExplorer.ViewModels
         /// <summary>
         /// A command that expects a <see cref="MovieListResult"/> passed as the parameter.
         /// </summary>
-        public ICommand MovieSelectedCommand { get; }
+        public ICommand NavigateToMovieDetailCommand { get; }
 
         public bool ShowLoader { get { return _runningTaskCount > 0; } }
 
@@ -49,9 +49,12 @@ namespace MovieExplorer.ViewModels
 
         protected async Task ShowLoaderAsync(Func<Task> asyncAction, [CallerMemberName] string callerMemberName = null)
         {
-            _runningTaskCount++;
-            RaisePropertyChanged(nameof(ShowLoader));
-            RaisePropertyChanged(nameof(InverseShowLoader));
+            if (_runningTaskCount++ == 0)
+            {
+                RaisePropertyChanged(nameof(ShowLoader));
+                RaisePropertyChanged(nameof(InverseShowLoader));
+            }
+
             try
             {
                 await asyncAction();
@@ -62,9 +65,11 @@ namespace MovieExplorer.ViewModels
             }
             finally
             {
-                _runningTaskCount--;
-                RaisePropertyChanged(nameof(ShowLoader));
-                RaisePropertyChanged(nameof(InverseShowLoader));
+                if (--_runningTaskCount == 0)
+                {
+                    RaisePropertyChanged(nameof(ShowLoader));
+                    RaisePropertyChanged(nameof(InverseShowLoader));
+                }
             }
         }
 
